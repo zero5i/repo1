@@ -70,7 +70,7 @@
 			</table>
 		</div>
 		
-		<div id="footer">
+		<div>
 			<input type="image" style="width:280px" src="${ctx}/static/images/sec/2_anniu1.png"/>
 		</div>
 	</div>
@@ -79,7 +79,7 @@
 	<div data-role="page" id="insert_edit_shop_page">
 		<s:form action="editShop" id="shopForm" name="shopForm" onsubmit="return false">
 			<div class="third_shang1">
-				<s:textfield name="shopEntity.shopName" data-role="none" id="shopPage_shopName" maxlength="10"/>
+				<s:textfield name="shopEntity.shopName" data-role="none" id="shopPage_shopName" placeholder="请输入店铺名称" maxlength="10"/>
 			</div>
 			<div id="main_holder" class="main_holder">
 				<div class="scroller">
@@ -234,30 +234,85 @@
 	
 	<!-- 项目诊断结果 -->
 	<div data-role="page" id="eval_shop_result_list">
-		<div>
-			提示：点击具体项可以查看解决指引
-		</div>
+		<table class="rest_top_header">
+			<tr>
+			<td>检查项目</td>
+			<td>合理范围</td>
+			<td>您的数据</td>
+			<td>自检结果</td>
+			</tr>
+		</table>
 		<div class="tbl_wapper">
-			<table class="tbl">
+			<table class="tbl_normal" >
 				<tr>
-					<td></td>
-					<td><a href="#eval_result_analasys">餐位数不合理</a></td>
-					<td></td>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
 				</tr>
+			</table>
+			<table class="tbl_warn" >
 				<tr>
-					<td></td>
-					<td><a href="#eval_result_analasys" data-transition="slide">毛利率不健康</a></td>
-					<td></td>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
 				</tr>
+			</table>
+			<table class="tbl_error" >
 				<tr>
-					<td></td>
-					<td><a href="#eval_result_analasys" data-transition="slide">菜品数量不合理</a></td>
-					<td></td>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
 				</tr>
+			</table>
+			<table class="tbl_error" >
 				<tr>
-					<td></td>
-					<td><a href="#eval_result_analasys" data-transition="slide">人力成本合理</a></td>
-					<td></td>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
+				</tr>
+			</table>
+			<table class="tbl_error" >
+				<tr>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
+				</tr>
+			</table>
+			<table class="tbl_error" >
+				<tr>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
+				</tr>
+			</table>
+			<table class="tbl_error" >
+				<tr>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
+				</tr>
+			</table>
+			<table class="tbl_error" >
+				<tr>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
+				</tr>
+			</table>
+			<table class="tbl_error" >
+				<tr>
+					<td>餐位数</td>
+					<td>180-200</td>
+					<td>240</td>
+					<td>不合理</td>
 				</tr>
 			</table>
 		</div>

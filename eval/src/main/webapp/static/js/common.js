@@ -112,6 +112,16 @@ $(document).on("pageinit","#shop_list_page", function(){
 	$("#shop_list_page input[type='image']").on("tap",function(){
 		$(this).attr('src','./static/images/sec/2_anniu2.png');
 		//$.mobile.changePage("detail.action", {transition:"slide",reverse:false}, true, true);
+		
+		$("#shopPage_id").val("");
+    	$("#shopPage_provinceId").val("0");
+    	$("#shopPage_cityId").val("");
+    	$("#shopPage_typeCode").val("0");
+    	$('#shopPage_shopName').val("");
+    	$('#shopPage_posCnt').val("");
+    	$('#shopPage_perPay').val("");
+    	$('#shopPage_spaceSize').val("");
+    	
 		$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
 	});
 }); 

@@ -337,19 +337,44 @@
 	
 	<!-- 经营趋势 -->	
 	<div data-role="page" id="eval_detail_chart">
-		<div>
-			<input type="hidden" id="detailChart_fromPage">
+		<div id="wrapper">
+			<div id="scroller">
+				<ul>
+					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
+					<li class="pop_ctzt2" style="background-position-y: 50%;"></li>
+					<li class="pop_ctzt3" style="background-position-y: 60%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 20%;"></li>
+					<li class="pop_ctzt3" style="background-position-y: 70%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 60%;"></li>
+					<li class="pop_ctzt2" style="background-position-y: 30%;"></li>
+					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 70%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 40%;"></li>
+					<li class="pop_ctzt2" style="background-position-y: 20%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 10%;"></li>
+					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
+					<li class="pop_ctzt1" style="background-position-y: 30%;"></li>
+					<li class="pop_ctzt3" style="background-position-y: 40%;"></li>
+					<li class="pop_ctzt4" style="background-position-y: 70%;"></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	
 	<!-- 分享 -->
 	<div data-role="page" id="eval_share_page">
-		<div id="header">
-			<h1>86,990</h1>
+		<div class="total-count">
+			86,990
 		</div>
-
-		<div data-role="content">
-			提供专业服务的用户数
+		<div class="word-exp">			
+		</div>
+		<div class="logo-exp">			
+		</div>
+		<div class="desc-exp">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+		</div>
+		<div id="footer">
+			<input type="image" style="width:280px" src="${ctx}/static/images/twelf/anniu1.png"/>
 		</div>
 	</div>
 	

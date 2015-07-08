@@ -37,11 +37,17 @@ body {
 #eval_type_page,
 #eval_shop_result_list,
 #eval_detail_chart,
-#eval_share_page,
 #advise_page {
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-image: url("../images/first/1_beijing.png");
+	text-align: center;
+}
+
+#eval_share_page{
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/twelf/bj.jpg");
 	text-align: center;
 }
 
@@ -418,14 +424,22 @@ body {
 	-webkit-animation-play-state:running;
 }
 
-#eval_detail_chart div:nth-child(1){ 
+#eval_detail_chart .main-holder{ 
 	position:absolute; 
-	background:#0080ff; 
-	top:100px;left:10px; 
-	right:10px;	
-	height:50%;
+	top:0px;left:0px; 
+	right:0px;	
+	bottom:0px;
 	padding:0; 
+	overflow: none;
 }
+
+#eval_detail_chart .main-holder div:nth-child(1){
+	background-size: cover;
+	background-repeat:repeat-x;
+	background-image: url("../images/eleven/bg.jpg");
+}
+
+
 
 #eval_shop_result_list div:nth-child(1){
 	margin:10px auto;
@@ -490,35 +504,118 @@ body {
 	text-align: center;
 }
 
-
-
-/* #eval_shop_result_list .tbl_wapper .tbl {
+#wrapper {
+	position: absolute;
+	z-index: 999;
+	top:0px;
+	left:0px;
+	bottom:0px;
 	width: 100%;
-	margin: 10px auto;
-	border-spacing: 10px
+	overflow: hidden;
+	-ms-touch-action: none;
 }
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(1){
-	width:50px;
+
+#scroller {
+	position: relative;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 1000px;
+	height: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	background-image: url("../images/eleven/bg.jpg");
+	background-repeat:repeat-x;
+	background-size:contain;
 }
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(3){
-	width:60px;
+
+#scroller ul {
+	list-style: none;
+	width: 100%;
+	padding: 0;
+	margin: 0;
 }
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(1),
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(2),
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(3) {
+
+#scroller li {
+	width: 80px;
+	height: 100%;
+	float: left;
+	line-height: 160px;
+	/* border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc; */
+	font-size: 14px;
+	overflow: hidden;
 	text-align: center;
-	margin: 10px auto;
-	height: 46px;
-	line-height: 46px;
+}
+
+.pop_ctzt1,
+.pop_ctzt2,
+.pop_ctzt3,
+.pop_ctzt4{
+	background-size: 50px 200px;
+	background-repeat: no-repeat;
+	background-position-x: center;
+}
+
+.pop_ctzt1{
+	background-image: url("../images/eleven/ctzt_1.png");
+}
+
+.pop_ctzt2{
+	background-image: url("../images/eleven/ctzt_2.png");
+}
+
+.pop_ctzt3{
+	background-image: url("../images/eleven/ctzt_3.png");
+}
+
+.pop_ctzt4{
+	background-image: url("../images/eleven/ctzt_4.png");
+}
+
+#eval_share_page .total-count{
+	margin-top:20px;
+	font-size:36px;
+	color:#fff;
+	text-align:center;
+}
+
+#eval_share_page .word-exp{
+	width:90%;
+	height:40px;
+	margin:10px auto;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	background-image: url("../images/sec/2_shuru1.png");
+	background-position: center center;
+	background-image: url("../images/twelf/zi1.png");
 }
 
-#eval_shop_result_list .tbl_wapper .tbl td:nth-child(2) a {
-	letter-spacing: 3px;
-	text-decoration: none;
-	font-size: 18px;
-	color: #fff;
-	font-weight: normal;
-} */
+#eval_share_page .logo-exp{
+	width:200;
+	height:80px;
+	margin:10px auto;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/twelf/logo.png");
+}
+
+.desc-exp{
+	text-align:left;
+	width:80%;
+	height:100px;
+	font-size:14px;
+	color:#fff;
+	margin:10px auto;
+}

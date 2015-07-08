@@ -1,4 +1,5 @@
 var myScroll;
+var myScroll2;
 
 function isInteger(s){
 	var r = /^[0-9]*[1-9][0-9]*$/; 
@@ -300,14 +301,46 @@ $(document).on("pageinit","#eval_shop_result_list", function(){
 	});
 });
 
-$(document).on("pageinit","#eval_detail_chart", function(){	
-	$('#eval_detail_chart').on("swiperight",function(){
+$(document).on("pageinit","#eval_detail_chart", function(){
+	/*$('#eval_detail_chart').on("swiperight",function(){
 		var fromPage = $('#detailChart_fromPage').val();
 		$.mobile.changePage(fromPage, {transition:"slide",reverse:true}, true, true);
-	}); 
+	}); */
 	
-	$('#eval_detail_chart').on("swipeleft",function(){
+	/*$('#eval_detail_chart').on("swipeleft",function(){
 		 $.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
+	});*/
+});
+
+$(document).on("pageshow","#eval_detail_chart", function(){
+	myScroll2 = new IScroll('#wrapper', { 
+		//eventPassthrough: true, 
+		scrollX: true, 
+		scrollY: false, 
+		//preventDefault: true,
+		onScrollMove: function(){
+			start = this.x - this.maxScrollX;
+			console.log("scrollMove " + start);
+		}
+	});	
+	var start = 0;
+	var end = 0;
+/*	myScroll2.on('scrollMove', function(){
+		start = this.x - this.maxScrollX;
+		console.log("scrollMove " + start);
+	});*/
+	
+	myScroll2.on('scrollStart', function(){
+		start = this.x - this.maxScrollX;
+		console.log(start);
+	});
+	myScroll2.on('scrollEnd', function(){
+		end = this.x - this.maxScrollX;
+		console.log(this.maxScrollX + " -- " + end);
+		
+		if(start == end && end == 0 ){
+			
+		}
 	});
 });
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是接口的路径，不然要运行的时候要报错 “is not known to the MapperRegistry”-->
+<mapper namespace="com.jmh.server.dao.IEvaluateDao">
+    <resultMap id="evalResultMap" type="com.jmh.server.entity.EvaluateEntity">
+		<id property="id" column="ID" />
+		<result property="shopId" column="shop_id"/>
+		<result property="evaluateDate" column="evaluate_date"/>
+		<result property="evaluateValue" column="evaluate_value"/>
+		<result property="monthlySales" column="monthly_sales"/>
+		<result property="monthlyPurchase" column="monthly_purchase"/>
+		<result property="monthlySalary" column="monthly_salary"/>
+		<result property="monthlyRent" column="monthly_rent"/>
+		<result property="monthlyEnergy" column="monthly_energy"/>
+		<result property="monthlyOtherPay" column="monthly_other_pay"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+	
+    <select id="selectEvaluateListByShopId"  resultMap="evalResultMap">
+		select
+			*
+		from t_evaluate
+		where
+			shop_id = #{shopId}
+    </select>
+    
+    <select id="selectEvaluateById"  resultMap="evalResultMap">
+		select
+			*
+		from t_evaluate
+		where
+			id = #{id}
+    </select>
+        
+    <select id="selectEvaluate" resultMap="evalResultMap">
+		select
+			*
+		from t_evaluate
+		where
+			shop_id = #{shopId}
+		and 
+			evaluate_date = #{evaluateDate}
+    </select>
+    
+	<update id="updateEvaluate" parameterType="com.jmh.server.entity.EvaluateEntity">
+        update t_evaluate SET 
+        	shop_id = #{shopId}, 
+        	evaluate_date = #{evaluateDate}, 
+        	evaluate_value = #{evaluateValue},
+        	monthly_sales = #{monthlySales},
+			monthly_purchase = #{monthlyPurchase},
+			monthly_salary = #{monthlySalary},
+			monthly_rent = #{monthlyRent},
+			monthly_energy = #{monthlyEnergy},
+			monthly_other_pay = #{monthlyOtherPay},
+			update_date = now()
+		 WHERE ID = #{id}
+    </update>
+    
+    <insert id="insertEvaluate" parameterType="com.jmh.server.entity.EvaluateEntity" useGeneratedKeys="true" keyProperty="id">
+    	insert into t_evaluate (
+    		shop_id,
+    		evaluate_date,
+    		evaluate_value,
+    		monthly_sales,
+			monthly_purchase,
+			monthly_salary,
+			monthly_rent,
+			monthly_energy,
+			monthly_other_pay,
+			create_date,
+			update_date
+		) 
+		values
+		(
+			#{shopId},
+			#{evaluateDate}, 
+			#{evaluateValue},
+			#{monthlySales},
+			#{monthlyPurchase},
+			#{monthlySalary},
+			#{monthlyRent},
+			#{monthlyEnergy},
+			#{monthlyOtherPay},
+			now(),
+			now()
+		)
+    </insert>
+</mapper>

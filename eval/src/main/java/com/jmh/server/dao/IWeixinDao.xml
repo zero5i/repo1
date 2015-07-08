@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是接口的路径，不然要运行的时候要报错 “is not known to the MapperRegistry”-->
+<mapper namespace="com.jmh.server.dao.IWeixinDao">
+    <select id="selectWeixinByKey" resultType="com.jmh.server.entity.WeixinEntity">
+		select
+			key_name as keyName,
+			hold_val as holdVal,
+			create_date as createDate,
+			( UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(create_date) > 7000 ) as expiredFlag
+		from  t_weixin
+		where
+			key_name = #{keyName}
+    </select>
+    
+    <update id="updateWeixin" parameterType="com.jmh.server.entity.WeixinEntity">
+		update t_weixin SET
+			hold_val = #{holdVal}, create_date = now()
+		WHERE key_name = #{keyName}
+	</update>
+    
+    <insert id="insertWeixin" parameterType="com.jmh.server.entity.WeixinEntity">
+      	insert into	t_weixin
+		(
+			key_name,
+			hold_val,
+			create_date
+		) 
+		values(
+			#{keyName},
+			#{holdVal}, 
+			now()
+		)
+    </insert>
+</mapper>

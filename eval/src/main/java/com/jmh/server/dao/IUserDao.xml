@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是接口的路径，不然要运行的时候要报错 “is not known to the MapperRegistry” -->
+<mapper namespace="com.jmh.server.dao.IUserDao">
+
+	<resultMap id="userResultMap" type="com.jmh.server.entity.UserEntity">
+		<id property="id" column="ID" />
+		<result property="openId" column="open_id"/>
+		<result property="initFlag" column="init_flag"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+
+	<select id="selectUserList" resultMap="userResultMap">
+		select
+		*
+		from
+		t_user
+	</select>
+
+	<select id="selectUserById" resultMap="userResultMap">
+		select
+		*
+		from
+		t_user
+		where
+		id = #{id}
+	</select>
+	
+	<select id="selectUserByOpenId" resultMap="userResultMap">
+		select
+		*
+		from
+		t_user
+		where
+		open_id = #{openId}
+	</select>
+	
+	<update id="updateUserFlag">
+		update t_user SET
+			init_flag = #{initFlag}, update_date = now()
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insertUser" parameterType="com.jmh.server.entity.UserEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into	t_user
+		(
+			open_id,
+			init_flag,
+			create_date,
+			update_date
+		) 
+		values(
+			#{openId},
+			0, 
+			now(), 
+			now()
+		)
+	</insert>
+</mapper>

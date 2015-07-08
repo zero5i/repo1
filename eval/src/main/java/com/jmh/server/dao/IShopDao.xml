@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里namespace必须是接口的路径，不然要运行的时候要报错 “is not known to the MapperRegistry” -->
+<mapper namespace="com.jmh.server.dao.IShopDao">
+	<resultMap id="userResultMap" type="com.jmh.server.entity.ShopEntity">
+		<id property="id" column="ID" />
+		<result property="userId" column="user_id"/>
+		<result property="shopName" column="shop_name"/>
+		<result property="evalCount" column="eval_count"/>
+		<result property="provinceId" column="province_id"/>
+		<result property="cityId" column="city_id"/>
+		<result property="typeCode" column="type_code"/>
+		<result property="posCount" column="pos_count"/>
+		<result property="perPay" column="per_pay"/>
+		<result property="spaceSize" column="space_size"/>
+		<result property="createDate" column="create_date"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+
+	<select id="selectShopListByUserId" resultMap="userResultMap">
+		select
+			t0.*, t1.eval_count
+		from t_shop t0 left outer join 
+			(select shop_id, count(0) as eval_count from t_evaluate group by shop_id) t1 on t1.shop_id = t0.id
+		where
+			t0.user_id = #{userId}
+	</select>
+
+	<select id="selectShopById" resultMap="userResultMap">
+		select
+		t0.*, t2.parent_id as province_id
+		from
+		t_shop t0
+		left outer join t_city t2 on t2.id = t0.city_id 
+		where
+		t0.id = #{id}
+	</select>
+	
+	<update id="updateShop" parameterType="com.jmh.server.entity.ShopEntity">
+		update t_shop SET
+			user_id  = #{userId},
+			shop_name =#{shopName},			
+			city_id = #{cityId},
+			type_code = #{typeCode},
+			pos_count = #{posCount},
+			per_pay = #{perPay},
+			space_size = #{spaceSize},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insertShop" parameterType="com.jmh.server.entity.ShopEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		t_shop
+		(
+			user_id,
+			shop_name,
+			city_id,
+			type_code,
+			pos_count,
+			per_pay,
+			space_size,
+			create_date,
+			update_date
+		) 
+		values
+		(
+			#{userId},
+			#{shopName},
+			#{cityId},
+			#{typeCode},
+			#{posCount},
+			#{perPay},
+			#{spaceSize},
+			now(),
+			now()
+		)
+	</insert>
+</mapper>

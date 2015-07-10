@@ -34,6 +34,11 @@ public class EvalController {
 	private long provinceId = 0L;
 	
 	/**
+	 * 登陆Token
+	 */
+	private String loginToken = null;
+	
+	/**
 	 * 区，市列表
 	 */
 	private List<CityEntity> cityList = new ArrayList<CityEntity>();
@@ -72,22 +77,17 @@ public class EvalController {
 		String weixinAppId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
 		
 		String openId = WeixinUtil.getOpenId(weixinAppId, weixinAppSecret, code);
-		
+		*/
+		String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
 		UserEntity user = evalService.getUserByOpenId(openId);
 		
 		if(user == null){
-			return ""; 
-		}*/
-
-		// TODO 获取用户在系统中的ID（非openid）
-		UserEntity user = new UserEntity();
-		user.setId(1L);
+			return "input"; 
+		}
 		
-		ActionContext actionContext = ActionContext.getContext();
-        Map<String, Object> session = actionContext.getSession();
-        session.put(SESSION_USER, user);
+		this.loginToken = user.getLoginToken();
 		
-		shopList = evalService.getShopListByUserId(user.getId());
+		this.shopList = evalService.getShopListByUserId(user.getId());
 		
 		//model.addAttribute("shopList", shopList);
 		return "success";
@@ -100,6 +100,13 @@ public class EvalController {
 	 */
 	public String detail(){
 		
+		UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
+        if(user == null){
+        	this.shopEntity = null;
+        	this.cityList = null;
+        	return "success";
+        }
+        
 		if(shopId > 0){
 			this.shopEntity = evalService.getShopById(shopId);
 			
@@ -117,10 +124,8 @@ public class EvalController {
 	 * String
 	 */
 	public String evalShop(){			
-
-		ActionContext actionContext = ActionContext.getContext();
-        Map<String, Object> session = actionContext.getSession();
-        UserEntity user = (UserEntity)session.get(SESSION_USER);
+		
+        UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
         if(user == null){
         	this.evaluateEntity = null;
         	return "success";
@@ -252,5 +257,21 @@ public class EvalController {
 	 */
 	public void setEvaluateEntity(EvaluateEntity evaluateEntity) {
 		this.evaluateEntity = evaluateEntity;
+	}
+
+	/**
+	 * <p>获取 登陆Token</p>
+	 * @return  loginToken  登陆Token<br>
+	 */
+	public String getLoginToken() {
+		return loginToken;
+	}
+
+	/**
+	 * <p>设置 登陆Token</p>
+	 * @param  loginToken  登陆Token<br>
+	 */
+	public void setLoginToken(String loginToken) {
+		this.loginToken = loginToken;
 	}
 }

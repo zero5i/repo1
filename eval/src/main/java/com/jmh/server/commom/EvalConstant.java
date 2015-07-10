@@ -1,6 +1,6 @@
 package com.jmh.server.commom;
 
-public class SampleConstant {
+public class EvalConstant {
 
 	/**
 	 * 微信持久值_access_token
@@ -16,4 +16,5 @@ public class SampleConstant {
 	 * 微信持久值过期Flag
 	 */
 	public static final int WEIXIN_EXPIRED_FLAG_1 = 1;
+
 }

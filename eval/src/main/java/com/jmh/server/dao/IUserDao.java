@@ -26,6 +26,14 @@ public interface IUserDao {
 	 * UserEntity
 	 */
 	public UserEntity selectUserById(@Param("id") Long id);
+
+	/**
+	 * 通过login_token查询<p>
+	 * @param loginToken
+	 * @return <p>
+	 * UserEntity
+	 */
+	public UserEntity selectUserByLoginToken(@Param("loginToken") String loginToken);
 	
 	/**
 	 * <p>通过微信OpenId取得用户信息</p>
@@ -49,5 +57,12 @@ public interface IUserDao {
 	 * int
 	 */
 	public int insertUser(UserEntity user);
+	
+	/**
+	 * <p>更新用户
+	 * @param userEntity <p>
+	 * void
+	 */
+	public int updateUser(UserEntity userEntity);
 
 }

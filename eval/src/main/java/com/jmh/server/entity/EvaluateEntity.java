@@ -29,7 +29,7 @@ public class EvaluateEntity implements Serializable {
 	/**
 	 * 测评值
 	 */
-	private Long evaluateValue;
+	private BigDecimal evaluateValue;
 
 	/**月销售额*/
 	private BigDecimal monthlySales;
@@ -48,6 +48,9 @@ public class EvaluateEntity implements Serializable {
 	
 	/**其他开销*/
 	private BigDecimal monthlyOtherPay;
+	
+	/** 团购收入 */
+	private BigDecimal monthlyGroupBuy;
 	
 	/**记录创建时间*/
 	private Date createDate;
@@ -91,7 +94,7 @@ public class EvaluateEntity implements Serializable {
 	 * <p>获取 测评值</p>
 	 * @return  evaluateValue  测评值<br>
 	 */
-	public Long getEvaluateValue() {
+	public BigDecimal getEvaluateValue() {
 		return evaluateValue;
 	}
 
@@ -99,7 +102,7 @@ public class EvaluateEntity implements Serializable {
 	 * <p>设置 测评值</p>
 	 * @param  evaluateValue  测评值<br>
 	 */
-	public void setEvaluateValue(Long evaluateValue) {
+	public void setEvaluateValue(BigDecimal evaluateValue) {
 		this.evaluateValue = evaluateValue;
 	}
 
@@ -245,5 +248,21 @@ public class EvaluateEntity implements Serializable {
 	 */
 	public void setShopId(Long shopId) {
 		this.shopId = shopId;
+	}
+
+	/**
+	 * <p>获取 团购收入</p>
+	 * @return  monthlyGroupBuy  团购收入<br>
+	 */
+	public BigDecimal getMonthlyGroupBuy() {
+		return monthlyGroupBuy;
+	}
+
+	/**
+	 * <p>设置 团购收入</p>
+	 * @param  monthlyGroupBuy  团购收入<br>
+	 */
+	public void setMonthlyGroupBuy(BigDecimal monthlyGroupBuy) {
+		this.monthlyGroupBuy = monthlyGroupBuy;
 	}
 }

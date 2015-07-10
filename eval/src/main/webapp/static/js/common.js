@@ -41,7 +41,7 @@ function redirectDetailChart(shopId){
         dataType: 'json',
         url  : "ajax/findShop.action",  
         cache : false, 
-        data : {shopId:shopId},
+        data : {shopId:shopId, loginToken : loginToken},
         success : function(data, status){
         	
         	$('#detailChart_fromPage').val("#shop_list_page");
@@ -60,7 +60,7 @@ function redirectEidt(shopId){
 	$.ajax({ 
         type : "GET", 
         dataType: 'json',
-        url  : "ajax/findShop.action",  
+        url  : "ajax/findShop.action?loginToken=" + loginToken,
         cache : false, 
         data : {shopId:shopId},
         success : function(data, status){
@@ -220,13 +220,47 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		        type : "POST", 
 		        dataType: 'json',
 		        async : false,
-		        url  : "ajax/evalShop.action",  
+		        url  : "ajax/evalShop.action?loginToken=" + loginToken,  
 		        beforeSend: function(){
 		        	
 		       	},
 		        cache : false, 
 		        data : $('#shopForm').serialize(),
 		        success : function(data, status){
+		        	
+		        	if(!data || !data.evaluateEntity){
+		        		alert("评测失败，请重新打开微信后再试.");
+			        	$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
+			        	return;
+		        	}
+		        	
+		        	var val = data.evaluateEntity.evaluateValue;
+		        	
+		        	$('#evalShopPage_zt1').hide();
+		        	$('#evalShopPage_zt2').hide();
+		        	$('#evalShopPage_zt3').hide();
+		        	$('#evalShopPage_zt4').hide();
+		        	
+		        	var imgSrc = ""
+		        	if(val > 0){
+			        	// 盈利
+		        		imgSrc = "./static/images/result/bt1.png";
+		        		$('#evalShopPage_zt1').show();
+		        	}else if(val == 0){
+		        		// 平衡
+		        		imgSrc = "./static/images/result/bt2.png";
+		        		$('#evalShopPage_zt2').show();
+			        	$('#evalShopPage_zt3').show();
+			        	$('#evalShopPage_zt4').show();
+		        	}else if(val < 0){
+		        		// 亏本
+		        		imgSrc = "./static/images/result/bt3.png";
+		        		$('#evalShopPage_zt2').show();
+			        	$('#evalShopPage_zt3').show();
+		        	}
+		        	
+		        	$('#evalShopPage_topImage').attr('src', imgSrc);
+		        	
 		    		$.mobile.changePage('#eval_shop_page',"pop",false,false);
 		        }, 
 		        error : function(data, status){

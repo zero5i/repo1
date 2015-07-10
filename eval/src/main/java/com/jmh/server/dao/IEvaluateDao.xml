@@ -13,6 +13,7 @@
 		<result property="monthlyRent" column="monthly_rent"/>
 		<result property="monthlyEnergy" column="monthly_energy"/>
 		<result property="monthlyOtherPay" column="monthly_other_pay"/>
+		<result property="monthlyGroupBuy" column="monthly_group_buy"/>
 		<result property="createDate" column="create_date"/>
 		<result property="updateDate" column="update_date"/>
 	</resultMap>
@@ -54,6 +55,7 @@
 			monthly_rent = #{monthlyRent},
 			monthly_energy = #{monthlyEnergy},
 			monthly_other_pay = #{monthlyOtherPay},
+			monthly_group_buy = #{monthlyGroupBuy},
 			update_date = now()
 		 WHERE ID = #{id}
     </update>
@@ -69,6 +71,7 @@
 			monthly_rent,
 			monthly_energy,
 			monthly_other_pay,
+			monthly_group_buy,
 			create_date,
 			update_date
 		) 
@@ -83,6 +86,7 @@
 			#{monthlyRent},
 			#{monthlyEnergy},
 			#{monthlyOtherPay},
+			#{monthlyGroupBuy},
 			now(),
 			now()
 		)

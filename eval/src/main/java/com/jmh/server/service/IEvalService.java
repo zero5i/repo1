@@ -95,4 +95,13 @@ public interface IEvalService {
 	 * EvaluateEntity
 	 */
 	public EvaluateEntity evalShop(ShopEntity shopEntity,	EvaluateEntity evaluateEntity);
+	
+
+	/**
+	 * 通过login_token查询<p>
+	 * @param loginToken
+	 * @return <p>
+	 * UserEntity
+	 */
+	public UserEntity getUserByLoginToken(String loginToken);
 }

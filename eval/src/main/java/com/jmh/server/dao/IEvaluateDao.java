@@ -29,7 +29,7 @@ public interface IEvaluateDao {
 	 * EvaluateEntity
 	 */
 	public EvaluateEntity selectEvaluateById(@Param("id") Long id);
-
+	
 	/**
 	 * 删除测评<p>
 	 * @param id

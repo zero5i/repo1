@@ -6,6 +6,7 @@
 	<resultMap id="userResultMap" type="com.jmh.server.entity.UserEntity">
 		<id property="id" column="ID" />
 		<result property="openId" column="open_id"/>
+		<result property="loginToken" column="login_token"/>
 		<result property="initFlag" column="init_flag"/>
 		<result property="createDate" column="create_date"/>
 		<result property="updateDate" column="update_date"/>
@@ -25,6 +26,15 @@
 		t_user
 		where
 		id = #{id}
+	</select>
+	
+	<select id="selectUserByLoginToken" resultMap="userResultMap">
+		select
+		*
+		from
+		t_user
+		where
+		login_token = #{loginToken}
 	</select>
 	
 	<select id="selectUserByOpenId" resultMap="userResultMap">
@@ -58,4 +68,13 @@
 			now()
 		)
 	</insert>
+	
+	<update id="updateUser" parameterType="com.jmh.server.entity.UserEntity">
+		update t_user SET
+			open_id = #{openId},
+			login_token = #{loginToken},
+			init_flag = #{initFlag},
+			update_date = now()
+		WHERE id = #{id}
+	</update>
 </mapper>

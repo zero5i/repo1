@@ -23,6 +23,9 @@ public class UserEntity implements Serializable {
 	/**初始化Flag*/
 	private Integer initFlag;
 	
+	/**登陆token*/
+	private String loginToken;
+	
 	/**记录创建时间*/
 	private Date createDate;
 	
@@ -107,5 +110,21 @@ public class UserEntity implements Serializable {
 	 */
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	/**
+	 * <p>获取 登陆token</p>
+	 * @return  loginToken  登陆token<br>
+	 */
+	public String getLoginToken() {
+		return loginToken;
+	}
+
+	/**
+	 * <p>设置 登陆token</p>
+	 * @param  loginToken  登陆token<br>
+	 */
+	public void setLoginToken(String loginToken) {
+		this.loginToken = loginToken;
 	}
 }

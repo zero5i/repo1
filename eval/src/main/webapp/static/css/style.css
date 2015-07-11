@@ -355,8 +355,7 @@ input::-webkit-inner-spin-button {
 
 #insert_edit_shop_page .main_holder .main_table .td_middle .one_3_1 input,
 #insert_edit_shop_page .main_holder .main_table .td_middle .one_3_2 input {
-	margin: 9px 10px 0 auto;
-	text-align: right;
+	margin: 9px 30px 0 auto;
 	background: transparent;
 	border: 0;
 	color:#fff;
@@ -364,7 +363,6 @@ input::-webkit-inner-spin-button {
 	text-align:right;
 	height:25px;
 	font-size: 18px;
-	color: #fff;
 }
 
 #insert_edit_shop_page .main_holder .main_table .td_last {

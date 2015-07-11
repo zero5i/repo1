@@ -16,14 +16,35 @@
 <script>
 	var loginToken = "<s:property value="loginToken"/>";
 </script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/iscroll.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/template.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/common.js" type="text/javascript"></script>
+
 <script>
 	$(function(){
 		loaded();
+	});
+	
+	wx.config({
+	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	    appId: '', // 必填，公众号的唯一标识
+	    timestamp: '', // 必填，生成签名的时间戳
+	    nonceStr: '', // 必填，生成签名的随机串
+	    signature: '',// 必填，签名，见附录1
+	    jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+	
+	wx.ready(function(){
+		console.log("ready");
+	    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+	});
+	
+	wx.error(function(res){
+		console.log("error " + res);
+	    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
 	});
 </script>
 	
@@ -66,9 +87,18 @@
 						<td class="td2">
 							<a href="#" onclick="redirectEidt(${shop.id})"><s:property value="#shop.shopName"/></a>
 						</td>
-						<td class="td3">
-							<div>&nbsp;</div>
-						</td>
+						<s:if test="#shop.evaluateValue != null && #shop.evaluateValue > 0">
+							<td class="td3_1" onclick="dispResultList(${shop.id})"></td>
+						</s:if>
+						<s:elseif test="#shop.evaluateValue != null && #shop.evaluateValue == 0">
+							<td class="td3_2" onclick="dispResultList(${shop.id})"></td>
+						</s:elseif>
+						<s:elseif test="#shop.evaluateValue != null && #shop.evaluateValue < 0">
+							<td class="td3_3" onclick="dispResultList(${shop.id})"></td>
+						</s:elseif>
+						<s:else>
+							<td></td>
+						</s:else>
 					</tr>
 				</s:iterator>
 			</table>
@@ -81,7 +111,7 @@
 
 	<!-- 添加、编辑门店 -->
 	<div data-role="page" id="insert_edit_shop_page">
-		<s:form action="editShop" id="shopForm" name="shopForm" onsubmit="return false">
+		<form id="shopForm" name="shopForm" onsubmit="return false">
 			<div class="third_shang1">
 				<s:textfield name="shopEntity.shopName" data-role="none" id="shopPage_shopName" placeholder="请输入店铺名称" maxlength="10"/>
 			</div>
@@ -188,7 +218,7 @@
 					</div>
 				</div>
 			</div>	
-		</s:form>
+		<form>
 	</div>
 	
 	<!-- 评测加载页 -->
@@ -232,6 +262,7 @@
 	
 	<!-- 项目诊断结果 -->
 	<div data-role="page" id="eval_shop_result_list">
+		<input type="hidden" id="shopResultList_fromPage">
 		<table class="rest_top_header">
 			<tr>
 			<td>检查项目</td>
@@ -276,7 +307,7 @@
 				<input type="button" value="返回" id="btn_back_result_list"/>
 			</div>
 			<div style="float:right;width:80px;margin-right:10px;">
-				<input type="button"  value="分享" id="btn_go_share"/>
+				<input type="button" value="分享" id="btn_go_share"/>
 			</div>
 		</div>
 	</div>

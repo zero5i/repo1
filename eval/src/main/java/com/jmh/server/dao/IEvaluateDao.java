@@ -23,6 +23,14 @@ public interface IEvaluateDao {
 	public List<EvaluateEntity> selectEvaluateListByShopId(@Param("shopId") Long shopId);
 
 	/**
+	 * <p>查询最近一次的评测记录
+	 * @param shopId
+	 * @return <p>
+	 * EvaluateEntity
+	 */
+	public EvaluateEntity selectLatestEvaluateByShopId(@Param("shopId") Long shopId);
+	
+	/**
 	 * 通过ID查询<p>
 	 * @param id
 	 * @return <p>

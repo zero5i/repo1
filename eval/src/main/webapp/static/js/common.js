@@ -294,6 +294,36 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 	});
 });
 
+function dispResultList(shopId){
+	$.ajax({ 
+        type : "GET", 
+        dataType: 'json',
+        url  : "ajax/findEvalList.action",  
+        cache : false, 
+        data : {shopId:shopId, loginToken : loginToken},
+        success : function(data, status){
+        	
+        	if(!data.evalPageBean){
+        		alert("获取评测记录失败，请重新打开微信后再试.");
+        		return;
+        	}
+        	
+        	var pageBean = data.evalPageBean;
+
+        	var html1 = template('evalShopResult_template', pageBean);
+        	$("#evalShopResultList_wapper").html(html1);
+        	
+        	$('#shopResultList_fromPage').val("#shop_list_page");
+        	
+        	$.mobile.changePage("#eval_shop_result_list", {transition:"slide",reverse:false}, true, true);
+        }, 
+        error : function(data,status){
+        	console.log(data);
+        	alert("获取评测记录失败，请重新打开微信后再试.");
+        } 
+    });
+}
+
 /**
  * 显示评测结果详细
  * @param idx
@@ -361,6 +391,7 @@ $(document).on("pageinit","#eval_type_page", function(){
 		}, 2000);
 		
 		setTimeout(function(){
+			$('#shopResultList_fromPage').val('#eval_type_page');
 			$.mobile.changePage("#eval_shop_result_list", {transition:"slide",reverse:false}, true, true);
 		}, 2300);
 		
@@ -377,7 +408,11 @@ $(document).on("pageinit","#eval_type_page", function(){
 
 $(document).on("pageinit","#eval_shop_result_list", function(){	
 	$('#eval_shop_result_list').on("swiperight",function(){
-		 $.mobile.changePage("#eval_type_page", {transition:"slide",reverse:true}, true, true);
+		var fromPage = $('#shopResultList_fromPage').val();
+		if(!fromPage){
+			frontPage = '#eval_type_page';
+		}
+		$.mobile.changePage(fromPage, {transition:"slide",reverse:true}, true, true);
 	}); 
 	
 	$('#eval_shop_result_list').on("swipeleft",function(){
@@ -395,15 +430,17 @@ $(document).on("pageinit","#eval_detail_chart", function(){
 	/*$('#eval_detail_chart').on("swipeleft",function(){
 		 $.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
 	});*/
-	$('#btn_back_result_list').on("tap", function(){
+	$('#btn_back_result_list').bind("click", function(){
 		var fromPage = $('#detailChart_fromPage').val();
 		$.mobile.changePage(fromPage, {transition:"slide",reverse:true}, true, true);
 	});
 	
-	$('#btn_go_share').on("tap", function(){
+	/*$('#btn_go_share').on("tap", function(){
+		$.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
+	});*/
+	$('#btn_go_share').bind('click', function(){
 		$.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
 	});
-	
 });
 
 $(document).on("pageshow","#eval_detail_chart", function(){
@@ -448,6 +485,22 @@ $(document).on("pageinit","#eval_share_page", function(){
 	$('#eval_share_page').on("swiperight",function(){
 		 $.mobile.changePage("#eval_detail_chart", {transition:"slide",reverse:true}, true, true);
 	}); 
+	
+	$("#eval_share_page input[type='image']").on("tap",function(){
+		var currObj = $(this); 
+		currObj.attr('src','./static/images/twelf/anniu2.png');
+		setTimeout(function(){
+			currObj.attr('src','./static/images/twelf/anniu1.png');
+		}, 300);
+		
+		var url = "http://mp.weixin.qq.com/s?__biz=MjM5Nzk1ODcxMw==&mid=206019690&idx=1&sn=21efcebc08577fd3f712aa4b80c29239#rd";
+		location.href = url;
+		/*$.mobile.changePage( url, {
+  			transition: "pop",
+  			reverse: false,
+  			changeHash: false
+  		});*/
+	});
 });
 
 $(document).on("pageinit","#advise_page", function(){

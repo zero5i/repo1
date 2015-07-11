@@ -20,7 +20,8 @@
 	<select id="selectShopListByUserId" resultMap="userResultMap">
 		select
 			t0.*, t1.eval_count
-		from t_shop t0 left outer join 
+		from t_shop	t0 
+		left outer join 
 			(select shop_id, count(0) as eval_count from t_evaluate group by shop_id) t1 on t1.shop_id = t0.id
 		where
 			t0.user_id = #{userId}

@@ -49,6 +49,9 @@ public class ShopEntity implements Serializable {
 	/**记录更新时间*/
 	private Date updateDate;
 
+	/**最新评测得分*/
+	private BigDecimal evaluateValue;
+	
 	/**
 	 * <p>获取 主键</p>
 	 * @return  id  主键<br>
@@ -239,6 +242,22 @@ public class ShopEntity implements Serializable {
 	 */
 	public void setProvinceId(Integer provinceId) {
 		this.provinceId = provinceId;
+	}
+
+	/**
+	 * <p>获取 最新评测得分</p>
+	 * @return  evaluateValue  最新评测得分<br>
+	 */
+	public BigDecimal getEvaluateValue() {
+		return evaluateValue;
+	}
+
+	/**
+	 * <p>设置 最新评测得分</p>
+	 * @param  evaluateValue  最新评测得分<br>
+	 */
+	public void setEvaluateValue(BigDecimal evaluateValue) {
+		this.evaluateValue = evaluateValue;
 	}
 
 }

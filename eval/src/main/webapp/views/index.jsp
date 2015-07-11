@@ -27,7 +27,7 @@
 	$(function(){
 		loaded();
 	});
-	
+	/* 
 	wx.config({
 	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 	    appId: '', // 必填，公众号的唯一标识
@@ -45,7 +45,7 @@
 	wx.error(function(res){
 		console.log("error " + res);
 	    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-	});
+	}); */
 </script>
 	
 </head>
@@ -157,17 +157,17 @@
 							<div class="one_3_1">
 								<div>3</div>
 								<div>餐位总数:</div>
-								<s:textfield type="number" name="shopEntity.posCount" data-role="none" id="shopPage_posCnt" maxlength="4"/> 
+								<s:textfield type="tel" name="shopEntity.posCount" data-role="none" id="shopPage_posCnt" maxlength="4"/> 
 							</div>
 							<div class="one_3_1">
 								<div>4</div>
 								<div>人均消费:</div>
-								<s:textfield type="number" name="shopEntity.perPay" data-role="none" id="shopPage_perPay" maxlength="4"/> 
+								<s:textfield type="tel" name="shopEntity.perPay" data-role="none" id="shopPage_perPay" maxlength="4"/> 
 							</div>
 							<div class="one_3_1" style="margin-bottom:0">
 								<div>5</div>
 								<div>前厅面积:</div>
-								<s:textfield type="number" name="shopEntity.spaceSize" data-role="none" id="shopPage_spaceSize" maxlength="8"/>
+								<s:textfield type="tel" name="shopEntity.spaceSize" data-role="none" id="shopPage_spaceSize" maxlength="8"/>
 							</div>
 							
 						</div>
@@ -181,32 +181,32 @@
 							<div class="one_3_1">
 								<div>6</div>
 								<div>月销售额:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlySales" id="shopPage_monthlySales" data-role="none" maxlength="8"/>
+								<s:textfield type="tel" name="evaluateEntity.monthlySales" id="shopPage_monthlySales" data-role="none" maxlength="8"/>
 							</div>
 							<div class="one_3_1">
 								<div>7</div>
 								<div>月采购额:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlyPurchase" id="shopPage_monthlyPurchase" data-role="none" maxlength="8"/>
+								<s:textfield type="tel" name="evaluateEntity.monthlyPurchase" id="shopPage_monthlyPurchase" data-role="none" maxlength="8"/>
 							</div>					
 							<div class="one_3_1">
 								<div>8</div>
 								<div>每月工资:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlySalary" id="shopPage_monthlySalary" data-role="none" maxlength="8"/> 
+								<s:textfield type="tel" name="evaluateEntity.monthlySalary" id="shopPage_monthlySalary" data-role="none" maxlength="8"/> 
 							</div>
 							<div class="one_3_1">
 								<div>9</div>
 								<div>每月租金:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlyRent" id="shopPage_monthlyRent" data-role="none" maxlength="8"/>
+								<s:textfield type="tel" name="evaluateEntity.monthlyRent" id="shopPage_monthlyRent" data-role="none" maxlength="8"/>
 							</div>
 							<div class="one_3_1">
 								<div>10</div>
 								<div>每月能耗:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlyEnergy" id="shopPage_monthlyEnergy" data-role="none" maxlength="8"/> 
+								<s:textfield type="tel" name="evaluateEntity.monthlyEnergy" id="shopPage_monthlyEnergy" data-role="none" maxlength="8"/> 
 							</div>
 							<div class="one_3_1" style="margin-bottom:0">
 								<div>10</div>
 								<div>其它开销:</div>
-								<s:textfield type="number" name="evaluateEntity.monthlyOtherPay" id="shopPage_monthlyOtherPay" data-role="none" maxlength="8"/> 
+								<s:textfield type="tel" name="evaluateEntity.monthlyOtherPay" id="shopPage_monthlyOtherPay" data-role="none" maxlength="8"/> 
 							</div>
 						</div>
 						<div class="td_last"></div>

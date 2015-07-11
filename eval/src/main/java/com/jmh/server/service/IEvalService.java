@@ -105,4 +105,20 @@ public interface IEvalService {
 	 * UserEntity
 	 */
 	public UserEntity getUserByLoginToken(String loginToken);
+
+	/**
+	 * <p>取得所有评测历史</p>
+	 * @param shopId
+	 * @return 
+	 * EvalPageBean
+	 */
+	public EvalPageBean getEvalList(long shopId);
+
+	/**
+	 * <p>取得评测结果提示详细
+	 * @param validateTypeValue
+	 * @return <p>
+	 * EvalValidateBean
+	 */
+	public List<String> getEvalValidateBean(int idx);
 }

@@ -39,17 +39,28 @@ function redirectDetailChart(shopId){
 	$.ajax({ 
         type : "GET", 
         dataType: 'json',
-        url  : "ajax/findShop.action",  
+        url  : "ajax/findEvalList.action",  
         cache : false, 
         data : {shopId:shopId, loginToken : loginToken},
         success : function(data, status){
+        	
+        	if(!data.evalPageBean){
+        		alert("获取评测记录失败，请重新打开微信后再试.");
+        		return;
+        	}
+        	
+        	var pageBean = data.evalPageBean;
+        	
+        	var html2 = template('evalShopChart_template', pageBean);
+        	$("#chartScroller").html(html2);
         	
         	$('#detailChart_fromPage').val("#shop_list_page");
         	
         	$.mobile.changePage("#eval_detail_chart", {transition:"slide",reverse:false}, true, true);
         }, 
         error : function(data,status){
-        	
+        	console.log(data);
+        	alert("获取评测记录失败，请重新打开微信后再试.");
         } 
     });
 }
@@ -283,6 +294,14 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 	});
 });
 
+/**
+ * 显示评测结果详细
+ * @param id
+ */
+function dispResultDetail(id){
+	
+}
+
 $(document).on("pageshow","#insert_edit_shop_page",function(){ 
 	loaded();
 	$("#insert_edit_shop_page input[type='image']").attr('src','./static/images/third/anniu_1.png');
@@ -355,6 +374,15 @@ $(document).on("pageinit","#eval_detail_chart", function(){
 	/*$('#eval_detail_chart').on("swipeleft",function(){
 		 $.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
 	});*/
+	$('#btn_back_result_list').on("tap", function(){
+		var fromPage = $('#detailChart_fromPage').val();
+		$.mobile.changePage(fromPage, {transition:"slide",reverse:true}, true, true);
+	});
+	
+	$('#btn_go_share').on("tap", function(){
+		$.mobile.changePage("#eval_share_page", {transition:"slide",reverse:false}, true, true);
+	});
+	
 });
 
 $(document).on("pageshow","#eval_detail_chart", function(){

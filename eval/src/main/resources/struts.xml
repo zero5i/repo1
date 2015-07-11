@@ -42,7 +42,7 @@
 		</action>
 		
 		<action name="detail" class="com.jmh.server.action.EvalController" method="detail">
-			<result name="success">views/detail.jsp</result>
+			<result name="success">views/index.jsp</result>
 		</action>
 	</package>
 	
@@ -70,6 +70,24 @@
 			<result name="success" type="json">
 				<param name="includeProperties">  
                     evalPageBean.* 
+                </param> 
+			</result>
+		</action>
+		
+		<!-- 查询店铺历史评测记录列表 -->
+		<action name="findEvalList" class="com.jmh.server.action.EvalController" method="findEvalList">
+			<result name="success" type="json">
+				<param name="includeProperties">  
+                    evalPageBean.* 
+                </param> 
+			</result>
+		</action>
+		
+		<!-- 查询结果提示信息列表 -->
+		<action name="findEvalValidate" class="com.jmh.server.action.EvalController" method="findEvalValidate">
+			<result name="success" type="json">
+				<param name="includeProperties">  
+                    evalTipsList.* 
                 </param> 
 			</result>
 		</action>

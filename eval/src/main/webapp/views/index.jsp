@@ -40,7 +40,7 @@
 		
 		<div class="first_saomiaoxian"></div>
 
-		<div id="footer">
+		<div class="footer">
 			<input type="image" width="280px" style="border: 0" src="${ctx}/static/images/first/1_anniu1.png"/>
 		</div>
 	</div>
@@ -215,9 +215,8 @@
 			<img id="evalShopPage_zt4" src="${ctx}/static/images/result/zt4.png">
 		</div>
 
-		<div id="footer">
+		<div class="footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/result/anniu1.png"/>
-			
 		</div>
 	</div>
 	
@@ -231,7 +230,7 @@
 
 		<div class="type_saomiaoxian"></div>
 		
-		<div id="footer">
+		<div class="footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/type/anniu.png"/>
 		</div>
 	</div>
@@ -247,7 +246,7 @@
 			</tr>
 		</table>
 		<div class="tbl_wapper" id="evalShopResultList_wapper">
-			<table class="tbl_normal" >
+			<table class="tbl_normal">
 				<tr>
 					<td>餐位数</td>
 					<td>180-200</td>
@@ -277,6 +276,7 @@
 	
 	<!-- 经营趋势 -->	
 	<div data-role="page" id="eval_detail_chart">
+		<input type="hidden" id="detailChart_fromPage"> 
 		<div id="wrapper">
 			<div id="chartScroller">
 				<ul>
@@ -299,6 +299,14 @@
 				</ul>
 			</div>
 		</div>
+		<div class="footer">
+			<div style="float:left;width:80px;margin-left:10px;">
+				<input type="button" value="返回" id="btn_back_result_list"/>
+			</div>
+			<div style="float:right;width:80px;margin-right:10px;">
+				<input type="button"  value="分享" id="btn_go_share"/>
+			</div>
+		</div>
 	</div>
 	
 	<!-- 分享 -->
@@ -313,7 +321,7 @@
 		<div class="desc-exp">
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
 		</div>
-		<div id="footer">
+		<div class="footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/twelf/anniu1.png"/>
 		</div>
 	</div>
@@ -327,19 +335,19 @@
 			意见建议详细信息
 		</div>
 
-		<div id="footer">
+		<div class="footer">
 			<a >开始分析</a>
 		</div>
 	</div>
 	
 	<script id="evalShopResult_template" type="text/html">
 	{{each validateBeanList as value i}}
-		<table class="tbl_{{ value.color }}" >
+		<table class="tbl_{{ value.color }}" onclick="dispResultDetail('okkk');">
 			<tr>
 				<td>{{ value.labelName }}</td>
 				<td>{{ value.normalRange }}</td>
 				<td>{{ value.scope }}</td>
-				<td>{{ value.evalTips }}</td>
+				<td>{{ value.statusLabel }}</td>
 			</tr>
 		</table>
 	{{/each}}

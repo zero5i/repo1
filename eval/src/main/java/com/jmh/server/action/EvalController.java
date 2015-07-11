@@ -18,6 +18,9 @@ public class EvalController {
 	
 	private static Logger logger = Logger.getLogger(EvalController.class);  
 	
+	private static final String SUCCESS = "success";
+	private static final String INPUT = "input";
+	
 	@Autowired
 	private IEvalService evalService;
 
@@ -61,6 +64,16 @@ public class EvalController {
 	 */
 	private List<ShopEntity> shopList = new ArrayList<ShopEntity>(); 
 	
+	/**
+	 * 评测记录idx
+	 */
+	private int validateTypeValue;
+	
+	/**
+	 * 评测结果提示列表
+	 */
+	private List<String> evalTipsList;
+	
 	public String index() {
 		
 		String accessToken = evalService.getAccessToken();
@@ -85,7 +98,7 @@ public class EvalController {
 		UserEntity user = evalService.getUserByOpenId(openId);
 		
 		if(user == null){
-			return "input"; 
+			return INPUT; 
 		}
 		
 		this.loginToken = user.getLoginToken();
@@ -93,7 +106,7 @@ public class EvalController {
 		this.shopList = evalService.getShopListByUserId(user.getId());
 		
 		//model.addAttribute("shopList", shopList);
-		return "success";
+		return SUCCESS;
 	}
 	
 	/**
@@ -118,12 +131,12 @@ public class EvalController {
 			this.shopEntity = new ShopEntity();
 		}
 		
-		return "success";
+		return SUCCESS;
 	}
 	
 	/**
-	 * <p>创建，修改,评测店铺
-	 * @return <p>
+	 * <p>创建，修改,评测店铺</p>
+	 * @return 
 	 * String
 	 */
 	public String evalShop(){			
@@ -131,7 +144,7 @@ public class EvalController {
         UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
         if(user == null){
         	this.evalPageBean = null;
-        	return "success";
+        	return SUCCESS;
         }
 		
         this.shopEntity.setUserId(user.getId());
@@ -139,12 +152,12 @@ public class EvalController {
         // 取得评测结果
 		this.evalPageBean = evalService.evalShop(this.shopEntity, this.evaluateEntity);
 		
-		return "success";
+		return SUCCESS;
 	}
 	
 	/**
-	 * <p>取得店铺信息AJAX
-	 * @return <p>
+	 * <p>取得店铺信息AJAX</p>
+	 * @return 
 	 * String
 	 */
 	public String findShop(){
@@ -154,7 +167,24 @@ public class EvalController {
 			// 初始化所有省下的列表
 			this.cityList = evalService.getChildCityList(shopEntity.getProvinceId());
 		}
-		return "success";
+		return SUCCESS;
+	}
+	
+	/**
+	 * <p>通过店铺ID取得该店铺所有评测记录</p>
+	 * @return 
+	 * String
+	 */
+	public String findEvalList(){
+		UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
+        if(user == null){
+        	this.evalPageBean = null;
+        	return SUCCESS;
+        }
+        
+		this.evalPageBean = evalService.getEvalList(this.shopId);
+		
+		return SUCCESS;
 	}
 	
 	/**
@@ -164,9 +194,19 @@ public class EvalController {
 	 */
 	public String findCityList(){
 		this.cityList = evalService.getChildCityList(provinceId);
-		return "success";
+		return SUCCESS;
 	}
-
+	
+	/**
+	 * <p>取得评测结果提示详细
+	 * @return <p>
+	 * String
+	 */
+	public String findEvalValidate(){
+		this.evalTipsList = evalService.getEvalValidateBean(validateTypeValue);
+		return SUCCESS;
+	}
+	
 	/**
 	 * <p>获取 shopList</p>
 	 * @return  shopList  shopList<br>
@@ -309,5 +349,37 @@ public class EvalController {
 	 */
 	public void setEvalPageBean(EvalPageBean evalPageBean) {
 		this.evalPageBean = evalPageBean;
+	}
+
+	/**
+	 * <p>获取 评测记录idx</p>
+	 * @return  validateTypeValue  评测记录idx<br>
+	 */
+	public int getValidateTypeValue() {
+		return validateTypeValue;
+	}
+
+	/**
+	 * <p>设置 评测记录idx</p>
+	 * @param  validateTypeValue  评测记录idx<br>
+	 */
+	public void setValidateTypeValue(int validateTypeValue) {
+		this.validateTypeValue = validateTypeValue;
+	}
+
+	/**
+	 * <p>获取 评测结果提示列表</p>
+	 * @return  evalTipsList  评测结果提示列表<br>
+	 */
+	public List<String> getEvalTipsList() {
+		return evalTipsList;
+	}
+
+	/**
+	 * <p>设置 评测结果提示列表</p>
+	 * @param  evalTipsList  评测结果提示列表<br>
+	 */
+	public void setEvalTipsList(List<String> evalTipsList) {
+		this.evalTipsList = evalTipsList;
 	}
 }

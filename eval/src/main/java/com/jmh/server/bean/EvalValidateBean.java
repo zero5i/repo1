@@ -1,5 +1,8 @@
 package com.jmh.server.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EvalValidateBean {
 	
@@ -29,9 +32,14 @@ public class EvalValidateBean {
 	private String scope;
 	
 	/**
-	 * 评测结果提示
+	 * 状态名称:正常，不合理等等
 	 */
-	private String evalTips;/*
+	private String statusLabel;
+	
+	/**
+	 * 评测结果提示列表
+	 */
+	private List<String> evalTips = new ArrayList<String>();/*
 	
 	*//**
 	 * 消息列表
@@ -122,7 +130,7 @@ public class EvalValidateBean {
 	 * <p>获取 评测结果提示</p>
 	 * @return  evalTips  评测结果提示<br>
 	 */
-	public String getEvalTips() {
+	public List<String> getEvalTips() {
 		return evalTips;
 	}
 
@@ -130,7 +138,23 @@ public class EvalValidateBean {
 	 * <p>设置 评测结果提示</p>
 	 * @param  evalTips  评测结果提示<br>
 	 */
-	public void setEvalTips(String evalTips) {
+	public void setEvalTips(List<String> evalTips) {
 		this.evalTips = evalTips;
+	}
+
+	/**
+	 * <p>获取 状态名称:正常，不合理等等</p>
+	 * @return  statusLabel  状态名称:正常，不合理等等<br>
+	 */
+	public String getStatusLabel() {
+		return statusLabel;
+	}
+
+	/**
+	 * <p>设置 状态名称:正常，不合理等等</p>
+	 * @param  statusLabel  状态名称:正常，不合理等等<br>
+	 */
+	public void setStatusLabel(String statusLabel) {
+		this.statusLabel = statusLabel;
 	}
 }

@@ -17,6 +17,11 @@ public class EvalPageBean {
 	private String evalType;
 	
 	/**
+	 * 评测结果类型Code
+	 */
+	private int evalTypeCode;
+	
+	/**
 	 * 评测类型提醒消息
 	 */
 	private String evalTypeMsg;
@@ -88,6 +93,22 @@ public class EvalPageBean {
 	 */
 	public void setValidateBeanList(List<EvalValidateBean> validateBeanList) {
 		this.validateBeanList = validateBeanList;
+	}
+
+	/**
+	 * <p>获取 评测结果类型Code</p>
+	 * @return  evalTypeCode  评测结果类型Code<br>
+	 */
+	public int getEvalTypeCode() {
+		return evalTypeCode;
+	}
+
+	/**
+	 * <p>设置 评测结果类型Code</p>
+	 * @param  evalTypeCode  评测结果类型Code<br>
+	 */
+	public void setEvalTypeCode(int evalTypeCode) {
+		this.evalTypeCode = evalTypeCode;
 	}
 	
 	

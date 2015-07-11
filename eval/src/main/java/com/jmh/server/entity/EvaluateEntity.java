@@ -30,6 +30,11 @@ public class EvaluateEntity implements Serializable {
 	 * 测评值
 	 */
 	private BigDecimal evaluateValue;
+	
+	/**
+	 * 评测结果状态值
+	 */
+	private Integer statusTypeCode;
 
 	/**月销售额*/
 	private BigDecimal monthlySales;
@@ -264,5 +269,21 @@ public class EvaluateEntity implements Serializable {
 	 */
 	public void setMonthlyGroupBuy(BigDecimal monthlyGroupBuy) {
 		this.monthlyGroupBuy = monthlyGroupBuy;
+	}
+
+	/**
+	 * <p>获取 评测结果状态值</p>
+	 * @return  statusTypeCode  评测结果状态值<br>
+	 */
+	public Integer getStatusTypeCode() {
+		return statusTypeCode;
+	}
+
+	/**
+	 * <p>设置 评测结果状态值</p>
+	 * @param  statusTypeCode  评测结果状态值<br>
+	 */
+	public void setStatusTypeCode(Integer statusTypeCode) {
+		this.statusTypeCode = statusTypeCode;
 	}
 }

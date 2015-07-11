@@ -465,7 +465,6 @@ body {
 }
 
 #eval_shop_result_list .rest_top_header tr td:nth-child(1){
-	
 	width:31%; 
 }
 #eval_shop_result_list .rest_top_header tr td:nth-child(2){
@@ -502,6 +501,21 @@ body {
 	margin: 10px auto;
 	color:#fff;
 	text-align: center;
+	font-size:14px;
+	font-weight: normal;;
+}
+
+#eval_shop_result_list .tbl_wapper table tr td:nth-child(1){
+	width:31%; 
+}
+#eval_shop_result_list .tbl_wapper table tr td:nth-child(2){
+	width:22%;
+}
+#eval_shop_result_list .tbl_wapper table tr td:nth-child(3){
+	width:21%;
+}
+#eval_shop_result_list .tbl_wapper table tr td:nth-child(4){
+	width:auto;
 }
 
 #wrapper {

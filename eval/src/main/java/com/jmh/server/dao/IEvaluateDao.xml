@@ -7,6 +7,7 @@
 		<result property="shopId" column="shop_id"/>
 		<result property="evaluateDate" column="evaluate_date"/>
 		<result property="evaluateValue" column="evaluate_value"/>
+		<result property="statusTypeCode" column="status_type_code"/>
 		<result property="monthlySales" column="monthly_sales"/>
 		<result property="monthlyPurchase" column="monthly_purchase"/>
 		<result property="monthlySalary" column="monthly_salary"/>
@@ -49,6 +50,7 @@
         	shop_id = #{shopId}, 
         	evaluate_date = #{evaluateDate}, 
         	evaluate_value = #{evaluateValue},
+        	status_type_code = #{statusTypeCode},
         	monthly_sales = #{monthlySales},
 			monthly_purchase = #{monthlyPurchase},
 			monthly_salary = #{monthlySalary},
@@ -65,6 +67,7 @@
     		shop_id,
     		evaluate_date,
     		evaluate_value,
+    		status_type_code,
     		monthly_sales,
 			monthly_purchase,
 			monthly_salary,
@@ -80,6 +83,7 @@
 			#{shopId},
 			#{evaluateDate}, 
 			#{evaluateValue},
+			#{statusTypeCode},
 			#{monthlySales},
 			#{monthlyPurchase},
 			#{monthlySalary},

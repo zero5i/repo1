@@ -19,13 +19,14 @@
 <script src="${ctx}/static/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/iscroll.js" type="text/javascript"></script>
+<script src="${ctx}/static/js/template.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/common.js" type="text/javascript"></script>
 <script>
 	$(function(){
 		loaded();
 	});
 </script>
-
+	
 </head>
 
 <body>
@@ -222,8 +223,8 @@
 	
 	<!-- 状况类型 -->
 	<div data-role="page" id="eval_type_page">
-		<div>
-			扩张型
+		<div id="evalType_header">
+			
 		</div>
 
 		<div class="first_canting"></div>
@@ -245,72 +246,8 @@
 			<td>自检结果</td>
 			</tr>
 		</table>
-		<div class="tbl_wapper">
+		<div class="tbl_wapper" id="evalShopResultList_wapper">
 			<table class="tbl_normal" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_warn" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
-			<table class="tbl_error" >
 				<tr>
 					<td>餐位数</td>
 					<td>180-200</td>
@@ -320,7 +257,7 @@
 			</table>
 		</div>
 	</div>
-	
+
 	<!-- 具体项目的分析 -->	
 	<div data-role="page" id="eval_result_analasys">
 		<div id="header">
@@ -394,5 +331,18 @@
 			<a >开始分析</a>
 		</div>
 	</div>
+	
+	<script id="evalShopResult_template" type="text/html">
+	{{each validateBeanList as value i}}
+		<table class="tbl_{{value.color}}" >
+			<tr>
+				<td>{{ value.labelName }}</td>
+				<td>{{ value.normalRange }}</td>
+				<td>{{ value.scope }}</td>
+				<td>{{ value.evalTips }}</td>
+			</tr>
+		</table>
+	{{/each}}
+	</script>
 </body>
 </html>

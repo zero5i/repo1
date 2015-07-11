@@ -241,12 +241,13 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 
 			evaluate.setEvaluateValue(evaluateValue);
 			
+			this.parseEvalValidateBean(shopEntity, evaluate, retBean);
+			
 			int evalRet = evaluateDao.insertEvaluate(evaluate);
 			if(evalRet == 0){
 				throw new SampleServiceException("评测数据创建失败.");
 			}
 			
-			this.parseEvalValidateBean(shopEntity, evaluate, retBean);
 			return retBean;
 		}
 	
@@ -259,9 +260,10 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 
 		evalEntity.setEvaluateValue(evaluateValue);
 		
+		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
+		
 		evaluateDao.updateEvaluate(evalEntity);
 		
-		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
 		return retBean;
 	}
 	
@@ -274,8 +276,13 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		List<EvalValidateBean> validateBeanList = new ArrayList<EvalValidateBean>();
 		
+		// 绿数
 		int greeCnt = 0;
+		
+		// 黄数
 		int yellowCnt = 0;
+		
+		// 红数
 		int redCnt = 0;
 		
 		float evaluateValue = evalEntity.getEvaluateValue().floatValue();
@@ -285,6 +292,9 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 餐位总数
 		Integer posCount = shopEntity.getPosCount();
+		
+		// 菜品数量 // TODO 
+		int foodCnt = 0;
 		
 		// 月销售额
 		BigDecimal monthlySales = evalEntity.getMonthlySales();
@@ -303,21 +313,26 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 其他开销
 		BigDecimal monthlyOtherPay = evalEntity.getMonthlyOtherPay();
+		monthlyOtherPay = monthlyOtherPay == null ? BigDecimal.ZERO : monthlyOtherPay;
 		
 		//  团购收入 
 		BigDecimal monthlyGroupBuy = evalEntity.getMonthlyGroupBuy();
+		monthlyGroupBuy = monthlyGroupBuy == null ? BigDecimal.ZERO : monthlyGroupBuy;
 		
 		// 餐位数 评测值 = 前厅面积 / 餐位总数
 		EvalValidateBean bean1 = new EvalValidateBean();
 		float val1 = spaceSize.divide(BigDecimal.valueOf(posCount), 1, BigDecimal.ROUND_HALF_UP).floatValue();
 		if(val1 >= 1.2 && val1 <= 1.4){
 			bean1.setColor(ColorType.绿.getValue());
+			bean1.setEvalTips(ColorType.绿.getTips());
 			greeCnt++;
-		}else if((val1 >= 1.0 && val1 < 1.2) || (val1 > 1.4 && val1 <= 1.5)){
+		}else if((val1 > 1.0 && val1 < 1.2) || (val1 > 1.4 && val1 < 1.5)){
 			bean1.setColor(ColorType.黄.getValue());
+			bean1.setEvalTips(ColorType.黄.getTips());
 			yellowCnt++;
-		}else if(val1 < 1.0 || val1 > 1.5){
+		}else if(val1 <= 1.0 || val1 >= 1.5){
 			bean1.setColor(ColorType.红.getValue());
+			bean1.setEvalTips(ColorType.红.getTips());
 			redCnt++;
 		}
 		bean1.setIdx(EvalValidateType.餐位数.getValue());
@@ -328,16 +343,19 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 毛利率 评测值 = （1 - 月采购额 / 月销售额）* 100%
 		EvalValidateBean bean2 = new EvalValidateBean();
-		float val2 = monthlyPurchase.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue();
-		val2 = (1 - val2) * 100;
+		float val2Tmp = monthlyPurchase.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue();
+		int val2 = (int)((1 - val2Tmp) * 100);
 		if(val2 >= 63 && val2 <= 70){
 			bean2.setColor(ColorType.绿.getValue());
+			bean2.setEvalTips(ColorType.绿.getTips());
 			greeCnt++;
-		}else if(val2 >= 58 && val2 < 63){
+		}else if(val2 > 58 && val2 < 63){
 			bean2.setColor(ColorType.黄.getValue());
+			bean2.setEvalTips(ColorType.黄.getTips());
 			yellowCnt++;
-		}else if(val2 < 58){
+		}else if(val2 <= 58){
 			bean2.setColor(ColorType.红.getValue());
+			bean2.setEvalTips(ColorType.红.getTips());
 			redCnt++;
 		}
 		bean2.setIdx(EvalValidateType.毛利率.getValue());
@@ -346,33 +364,182 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		bean2.setScope(String.valueOf(val2) + "%");
 		validateBeanList.add(bean2);
 		
+		// 菜品数量
+		EvalValidateBean bean3 = new EvalValidateBean();		
+		// 前厅面积小于100平方米
+		if(spaceSize.intValue() <= 100){
+			if(foodCnt >= 80 && foodCnt <= 100){
+				bean3.setColor(ColorType.绿.getValue());
+				bean3.setEvalTips(ColorType.绿.getTips());
+				greeCnt++;
+			}else if((foodCnt >= 60 && foodCnt < 80) || (foodCnt > 100 && foodCnt < 120)){
+				bean3.setColor(ColorType.黄.getValue());
+				bean3.setEvalTips(ColorType.黄.getTips());
+				yellowCnt++;
+			}else if(foodCnt <= 80 || foodCnt >= 120){
+				bean3.setColor(ColorType.红.getValue());
+				bean3.setEvalTips(ColorType.红.getTips());
+				redCnt++;
+			}
+			bean3.setNormalRange("80~100");
+		}else if(spaceSize.intValue() > 100 && spaceSize.intValue() < 150){
+			if(foodCnt >= 100 && foodCnt <= 120){
+				bean3.setColor(ColorType.绿.getValue());
+				bean3.setEvalTips(ColorType.绿.getTips());
+				greeCnt++;
+			}else if((foodCnt >= 80 && foodCnt < 100) || (foodCnt > 120 && foodCnt < 140)){
+				bean3.setColor(ColorType.黄.getValue());
+				bean3.setEvalTips(ColorType.黄.getTips());
+				yellowCnt++;
+			}else if(foodCnt <= 100 || foodCnt >= 140){
+				bean3.setColor(ColorType.红.getValue());
+				bean3.setEvalTips(ColorType.红.getTips());
+				redCnt++;
+			}
+			bean3.setNormalRange("100~120");
+		}else if(spaceSize.intValue() >= 150){
+			if(foodCnt >= 120 && foodCnt <= 140){
+				bean3.setColor(ColorType.绿.getValue());
+				bean3.setEvalTips(ColorType.绿.getTips());
+				greeCnt++;
+			}else if((foodCnt > 100 && foodCnt < 120) || (foodCnt > 140 && foodCnt < 160)){
+				bean3.setColor(ColorType.黄.getValue());
+				bean3.setEvalTips(ColorType.黄.getTips());
+				yellowCnt++;
+			}else if(foodCnt <= 100 || foodCnt >= 160){
+				bean3.setColor(ColorType.红.getValue());
+				bean3.setEvalTips(ColorType.红.getTips());
+				redCnt++;
+			}
+			bean3.setNormalRange("120~140");
+		}
+		bean3.setScope(String.valueOf(foodCnt));
+		bean3.setIdx(EvalValidateType.菜品数量.getValue());
+		bean3.setLabelName(EvalValidateType.菜品数量.getLabel());
+		validateBeanList.add(bean3);
+		
+		// 团购售卖 月团购收入 / 月销售额
+		EvalValidateBean bean4 = new EvalValidateBean();
+		int val4 = (int)(monthlyGroupBuy.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue() * 100);
+		if(val4 >= 7 && val4 <= 15){
+			bean4.setColor(ColorType.绿.getValue());
+			bean4.setEvalTips(ColorType.绿.getTips());
+			greeCnt++;
+		}else if((val4 > 0 && val4 < 7) || (val4 > 16 && val4 < 25)){
+			bean4.setColor(ColorType.黄.getValue());
+			bean4.setEvalTips(ColorType.黄.getTips());
+			yellowCnt++;
+		}else if(val4 >= 25){
+			bean4.setColor(ColorType.红.getValue());
+			bean4.setEvalTips(ColorType.红.getTips());
+			redCnt++;
+		}
+		bean4.setIdx(EvalValidateType.团购售卖.getValue());
+		bean4.setLabelName(EvalValidateType.团购售卖.getLabel());
+		bean4.setNormalRange("7%~15%");
+		bean4.setScope(String.valueOf(val4) + "%");
+		validateBeanList.add(bean4);
+		
+		// 人力成本 每月工资 / 月销售额
+		EvalValidateBean bean5 = new EvalValidateBean();
+		int val5 = (int)(monthlySalary.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue() * 100);
+		if(val5 >= 19 && val5 <= 24){
+			bean5.setColor(ColorType.绿.getValue());
+			bean5.setEvalTips(ColorType.绿.getTips());
+			greeCnt++;
+		}else if((val5 > 24 && val5 < 30)){
+			bean5.setColor(ColorType.黄.getValue());
+			bean5.setEvalTips(ColorType.黄.getTips());
+			yellowCnt++;
+		}else if(val5 >= 30){
+			bean5.setColor(ColorType.红.getValue());
+			bean5.setEvalTips(ColorType.红.getTips());
+			redCnt++;
+		}
+		bean5.setIdx(EvalValidateType.人力成本.getValue());
+		bean5.setLabelName(EvalValidateType.人力成本.getLabel());
+		bean5.setNormalRange("19%~24%");
+		bean5.setScope(String.valueOf(val5) + "%");
+		validateBeanList.add(bean5);
+		
+		// 租金成本 每月租金 / 月销售额
+		EvalValidateBean bean6 = new EvalValidateBean();
+		int val6 = (int)(monthlyRent.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue() * 100);
+		if(val6 >= 15 && val6 <= 20){
+			bean6.setColor(ColorType.绿.getValue());
+			bean6.setEvalTips(ColorType.绿.getTips());
+			greeCnt++;
+		}else if((val6 > 20 && val6 < 25)){
+			bean6.setColor(ColorType.黄.getValue());
+			bean6.setEvalTips(ColorType.黄.getTips());
+			yellowCnt++;
+		}else if(val6 >= 25){
+			bean6.setColor(ColorType.红.getValue());
+			bean6.setEvalTips(ColorType.红.getTips());
+			redCnt++;
+		}
+		bean6.setIdx(EvalValidateType.租金成本.getValue());
+		bean6.setLabelName(EvalValidateType.租金成本.getLabel());
+		bean6.setNormalRange("15%~20%");
+		bean6.setScope(String.valueOf(val6) + "%");
+		validateBeanList.add(bean6);
+		
+		// 能耗成本 每月租金 / 月销售额
+		EvalValidateBean bean7 = new EvalValidateBean();
+		int val7 = (int)(monthlyEnergy.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue() * 100);
+		if(val7 >= 2 && val7 <= 4){
+			bean7.setColor(ColorType.绿.getValue());
+			bean7.setEvalTips(ColorType.绿.getTips());
+			greeCnt++;
+		}else if((val7 > 4 && val7 < 6)){
+			bean7.setColor(ColorType.黄.getValue());
+			bean7.setEvalTips(ColorType.黄.getTips());
+			yellowCnt++;
+		}else if(val7 >= 6){
+			bean7.setColor(ColorType.红.getValue());
+			bean7.setEvalTips(ColorType.红.getTips());
+			redCnt++;
+		}
+		bean7.setIdx(EvalValidateType.能耗成本.getValue());
+		bean7.setLabelName(EvalValidateType.能耗成本.getLabel());
+		bean7.setNormalRange("2%~4%");
+		bean7.setScope(String.valueOf(val7) + "%");
+		validateBeanList.add(bean7);
+		
 		retBean.setValidateBeanList(validateBeanList);
 		
-		// 状况类型设定 TODO
+		// 状况类型设定
 		
 		// 扩张型 绿 >= 5项，且盈利
 		if(evaluateValue > 0 && greeCnt >= 5){
+			retBean.setEvalTypeCode(EvalStatusType.扩张型.getCode());
 			retBean.setEvalType(EvalStatusType.扩张型.getLabel());
 			retBean.setEvalTypeMsg(EvalStatusType.扩张型.getMsg());
 		}
 		
 		// 健康型 绿+黄 >= 6项，且盈利
 		if(evaluateValue > 0 && (greeCnt + yellowCnt) >= 6){
+			retBean.setEvalTypeCode(EvalStatusType.健康型.getCode());
 			retBean.setEvalType(EvalStatusType.健康型.getLabel());
 			retBean.setEvalTypeMsg(EvalStatusType.健康型.getMsg());
 		}		
 
 		// 警惕型 3 <= 绿+黄 <= 5
 		if((greeCnt + yellowCnt) >= 3 && (greeCnt + yellowCnt) <= 5){
+			retBean.setEvalTypeCode(EvalStatusType.警惕型.getCode());
 			retBean.setEvalType(EvalStatusType.警惕型.getLabel());
 			retBean.setEvalTypeMsg(EvalStatusType.警惕型.getMsg());
 		}
 		
 		// 危机型 0 <= 绿+黄 <= 2
 		if((greeCnt + yellowCnt) >= 0 && (greeCnt + yellowCnt) <= 2){
+			retBean.setEvalTypeCode(EvalStatusType.危机型.getCode());
 			retBean.setEvalType(EvalStatusType.危机型.getLabel());
 			retBean.setEvalTypeMsg(EvalStatusType.危机型.getMsg());
 		}
+		
+		// 评测结果类型Code设定
+		evalEntity.setStatusTypeCode(retBean.getEvalTypeCode());
 	}
 	
 	/**
@@ -400,6 +567,7 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 其他开销
 		BigDecimal monthlyOtherPay = evaluate.getMonthlyOtherPay();
+		monthlyOtherPay = monthlyOtherPay == null ? BigDecimal.ZERO : monthlyOtherPay;
 		
 		// 团购收入
 		BigDecimal monthlyGroupBuy = evaluate.getMonthlyGroupBuy();

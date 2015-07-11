@@ -263,6 +263,12 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		        	
 		        	$('#evalShopPage_topImage').attr('src', imgSrc);
 		        	
+		        	// 状况类型设定
+		        	$('#evalType_header').html(pageBean.evalType);
+		        	
+		        	var html = template('evalShopResult_template', pageBean);
+		        	$("#evalShopResultList_wapper").html(html);
+		        	
 		    		$.mobile.changePage('#eval_shop_page',"pop",false,false);
 		        }, 
 		        error : function(data, status){

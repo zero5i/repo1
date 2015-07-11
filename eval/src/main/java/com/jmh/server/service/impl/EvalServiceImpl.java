@@ -36,18 +36,34 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 	public List<ShopEntity> getShopListByUserId(Long userId) {
 		List<ShopEntity> list = shopDao.selectShopListByUserId(userId);
 		
+		for(ShopEntity shop : list){
+			EvaluateEntity evalEntity = evaluateDao.selectLatestEvaluateByShopId(shop.getId());
+			if( evalEntity != null ){
+				
+				// 设定最近一次的盈利结果
+				shop.setEvaluateValue(evalEntity.getEvaluateValue());
+			}
+		}
+		
 		return list;
 	}
 
 	@Override
 	public ShopEntity getShopById(Long id) {
-		ShopEntity entity = shopDao.selectShopById(id);
+		ShopEntity shop = shopDao.selectShopById(id);
 		
-		if(entity == null){
+		if(shop == null){
 			throw new SampleServiceException("未找到相关店铺信息");
 		}
 		
-		return entity;
+		EvaluateEntity evalEntity = evaluateDao.selectLatestEvaluateByShopId(shop.getId());
+		if( evalEntity != null ){
+			
+			// 设定最近一次的盈利结果
+			shop.setEvaluateValue(evalEntity.getEvaluateValue());
+		}
+		
+		return shop;
 	}
 
 	@Override
@@ -626,6 +642,12 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		EvalPageBean retBean = new EvalPageBean();
 		
+		ShopEntity shopEntity = shopDao.selectShopById(shopId);
+		EvaluateEntity evalEntity = evaluateDao.selectLatestEvaluateByShopId(shopId);
+		
+		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
+		
+		/*
 		// 评测趋势图转换
 		List<EvalChartBean> chartBeanList = new ArrayList<EvalChartBean>();
 		
@@ -641,7 +663,7 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		}
 		
 		// 评测趋势图设定
-		retBean.setChartBeanList(chartBeanList);
+		retBean.setChartBeanList(chartBeanList);*/
 		
 		return retBean;
 	}

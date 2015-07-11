@@ -294,6 +294,36 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 	});
 });
 
+function dispResultList(shopId){
+	$.ajax({ 
+        type : "GET", 
+        dataType: 'json',
+        url  : "ajax/findEvalList.action",  
+        cache : false, 
+        data : {shopId:shopId, loginToken : loginToken},
+        success : function(data, status){
+        	
+        	if(!data.evalPageBean){
+        		alert("获取评测记录失败，请重新打开微信后再试.");
+        		return;
+        	}
+        	
+        	var pageBean = data.evalPageBean;
+
+        	var html1 = template('evalShopResult_template', pageBean);
+        	$("#evalShopResultList_wapper").html(html1);
+        	
+        	$('#shopResultList_fromPage').val("#shop_list_page");
+        	
+        	$.mobile.changePage("#eval_shop_result_list", {transition:"slide",reverse:false}, true, true);
+        }, 
+        error : function(data,status){
+        	console.log(data);
+        	alert("获取评测记录失败，请重新打开微信后再试.");
+        } 
+    });
+}
+
 /**
  * 显示评测结果详细
  * @param idx
@@ -361,6 +391,7 @@ $(document).on("pageinit","#eval_type_page", function(){
 		}, 2000);
 		
 		setTimeout(function(){
+			$('#shopResultList_fromPage').val('#eval_type_page');
 			$.mobile.changePage("#eval_shop_result_list", {transition:"slide",reverse:false}, true, true);
 		}, 2300);
 		
@@ -377,7 +408,11 @@ $(document).on("pageinit","#eval_type_page", function(){
 
 $(document).on("pageinit","#eval_shop_result_list", function(){	
 	$('#eval_shop_result_list').on("swiperight",function(){
-		 $.mobile.changePage("#eval_type_page", {transition:"slide",reverse:true}, true, true);
+		var fromPage = $('#shopResultList_fromPage').val();
+		if(!fromPage){
+			frontPage = '#eval_type_page';
+		}
+		$.mobile.changePage(fromPage, {transition:"slide",reverse:true}, true, true);
 	}); 
 	
 	$('#eval_shop_result_list').on("swipeleft",function(){

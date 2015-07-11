@@ -143,18 +143,30 @@ body {
 	background-image: url("../images/sec/2_shuru1.png");
 }
 
-#shop_list_page .td3 {
+#shop_list_page .td3_1 {
 	width: 46px;
 	height: 46px;
-}
-
-#shop_list_page .td3 div {
-	width: 100%;
-	height: 100%;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-image: url("../images/sec/2_q1.png");
 }
+
+#shop_list_page .td3_2 {
+	width: 46px;
+	height: 46px;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/sec/2_q2.png");
+}
+
+#shop_list_page .td3_3 {
+	width: 46px;
+	height: 46px;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/sec/2_q3.png");
+}
+
 
 #shop_list_page .td1 a,
 #shop_list_page .td2 a {

@@ -66,9 +66,18 @@
 						<td class="td2">
 							<a href="#" onclick="redirectEidt(${shop.id})"><s:property value="#shop.shopName"/></a>
 						</td>
-						<td class="td3">
-							<div>&nbsp;</div>
-						</td>
+						<s:if test="#shop.evaluateValue != null && #shop.evaluateValue > 0">
+							<td class="td3_1" onclick="dispResultList(${shop.id})"></td>
+						</s:if>
+						<s:elseif test="#shop.evaluateValue != null && #shop.evaluateValue == 0">
+							<td class="td3_2" onclick="dispResultList(${shop.id})"></td>
+						</s:elseif>
+						<s:elseif test="#shop.evaluateValue != null && #shop.evaluateValue < 0">
+							<td class="td3_3" onclick="dispResultList(${shop.id})"></td>
+						</s:elseif>
+						<s:else>
+							<td></td>
+						</s:else>
 					</tr>
 				</s:iterator>
 			</table>
@@ -81,7 +90,7 @@
 
 	<!-- 添加、编辑门店 -->
 	<div data-role="page" id="insert_edit_shop_page">
-		<s:form action="editShop" id="shopForm" name="shopForm" onsubmit="return false">
+		<form id="shopForm" name="shopForm" onsubmit="return false">
 			<div class="third_shang1">
 				<s:textfield name="shopEntity.shopName" data-role="none" id="shopPage_shopName" placeholder="请输入店铺名称" maxlength="10"/>
 			</div>
@@ -188,7 +197,7 @@
 					</div>
 				</div>
 			</div>	
-		</s:form>
+		<form>
 	</div>
 	
 	<!-- 评测加载页 -->
@@ -232,6 +241,7 @@
 	
 	<!-- 项目诊断结果 -->
 	<div data-role="page" id="eval_shop_result_list">
+		<input type="hidden" id="shopResultList_fromPage">
 		<table class="rest_top_header">
 			<tr>
 			<td>检查项目</td>

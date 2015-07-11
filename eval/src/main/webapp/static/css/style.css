@@ -38,6 +38,7 @@ body {
 #eval_type_page,
 #eval_shop_result_list,
 #eval_detail_chart,
+#eval_result_analasys,
 #advise_page {
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -367,15 +368,16 @@ body {
 
 /* 评测结果页 */
 #eval_shop_page div:nth-child(1) img{
-	margin:20px auto 0;
+	margin:20px auto;
 	width:300px;
 } 
 
-#eval_shop_page div:nth-child(2){
+#eval_shop_page div:nth-child(2),
+#eval_result_analasys .resultAnalasys_wapper{
 	padding-top:50px;
-	margin:30px auto 0;
+	margin:10px auto 0;
 	width:300px;
-	height:200px;
+	height:240px;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	background-image: url("../images/result/kuang2.png");
@@ -385,6 +387,13 @@ body {
 	width:250px;
 }
 
+#eval_result_analasys .resultAnalasys_wapper div{
+	width:75%;
+	text-align:left;
+	margin: 5px auto;
+	color:#fff;
+	font-size:16px;
+}
 
 #eval_type_page div:nth-child(1) {
 	display:block;
@@ -671,4 +680,35 @@ writing-mode:tb-rl;
 	font-size:14px;
 	color:#fff;
 	margin:10px auto;
+}
+
+#eval_result_analasys .header{
+	width:90%;
+	height:140px;
+	margin:50px auto 10px;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/ten/11.png");
+}
+
+#eval_result_analasys .header .header-text{
+	position:relative;
+	top:13px;
+	color:#fff;
+	font-size:24px;
+}
+
+
+#eval_result_analasys .header .normal-range{
+	position:relative;
+	top:43px;
+	color:#80ff00;
+	font-size:12px;
+}
+
+#eval_result_analasys .header .scope{
+	position:relative;
+	top:55px;
+	color:red;
+	font-size:14px;
 }

@@ -193,7 +193,7 @@ public class EvalController {
 	 * String
 	 */
 	public String findCityList(){
-		this.cityList = evalService.getChildCityList(provinceId);
+		this.cityList = evalService.getChildCityList(this.provinceId);
 		return SUCCESS;
 	}
 	
@@ -203,7 +203,7 @@ public class EvalController {
 	 * String
 	 */
 	public String findEvalValidate(){
-		this.evalTipsList = evalService.getEvalValidateBean(validateTypeValue);
+		this.evalTipsList = evalService.getEvalValidateBean(this.validateTypeValue);
 		return SUCCESS;
 	}
 	

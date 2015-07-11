@@ -19,7 +19,7 @@ function findCity(){
         dataType: 'json',
         url  : "ajax/findCityList.action",  
         cache : false, 
-        data : {provinceId:provinceId},
+        data : {provinceId:provinceId, loginToken : loginToken},
         success : function(data, status){
         	$("#shopPage_cityId").empty();
         	$("<option value='0'>市区</option>").appendTo("#shopPage_cityId")//添加下拉框的option
@@ -71,9 +71,9 @@ function redirectEidt(shopId){
 	$.ajax({ 
         type : "GET", 
         dataType: 'json',
-        url  : "ajax/findShop.action?loginToken=" + loginToken,
+        url  : "ajax/findShop.action",
         cache : false, 
-        data : {shopId:shopId},
+        data : {shopId:shopId, loginToken:loginToken},
         success : function(data, status){
         	//alert(data);
         	var shop = data.shopEntity;
@@ -296,10 +296,31 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 
 /**
  * 显示评测结果详细
- * @param id
+ * @param idx
  */
-function dispResultDetail(id){
-	
+function dispResultDetail(idx, labelName, scope, normalRange, statusLabel){
+	$.ajax({ 
+        type : "GET", 
+        dataType: 'json',
+        url  : "ajax/findEvalValidate.action",
+        cache : false, 
+        data : {validateTypeValue:idx, loginToken: loginToken},
+        success : function(data, status){
+        	//alert(data);
+        	data.labelName = labelName;
+        	data.scope = scope;
+        	data.normalRange = normalRange;
+        	data.statusLabel = statusLabel;
+        	
+        	var html1 = template('resultAnalasys_template', data);
+        	$("#eval_result_analasys").html(html1);
+        	
+        	$.mobile.changePage("#eval_result_analasys", {transition:"slide",reverse:false}, true, true);
+        }, 
+        error : function(data,status){
+        	
+        } 
+    });
 }
 
 $(document).on("pageshow","#insert_edit_shop_page",function(){ 

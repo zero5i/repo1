@@ -222,14 +222,9 @@
 	
 	<!-- 状况类型 -->
 	<div data-role="page" id="eval_type_page">
-		<div id="evalType_header">
-			
-		</div>
-
+		<div id="evalType_header"></div>
 		<div class="first_canting"></div>
-
 		<div class="type_saomiaoxian"></div>
-		
 		<div class="footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/type/anniu.png"/>
 		</div>
@@ -246,31 +241,20 @@
 			</tr>
 		</table>
 		<div class="tbl_wapper" id="evalShopResultList_wapper">
-			<table class="tbl_normal">
-				<tr>
-					<td>餐位数</td>
-					<td>180-200</td>
-					<td>240</td>
-					<td>不合理</td>
-				</tr>
-			</table>
 		</div>
 	</div>
 
 	<!-- 具体项目的分析 -->	
 	<div data-role="page" id="eval_result_analasys">
-		<div id="header">
-			<h1>餐位数不合理</h1>
+		<div class="header">
+			<div class="header-text">餐位数不合理</div>
+			<div class="normal-range">餐位数合理范围:10%~20%</div>
+			<div class="scope">您的数据是:10%</div>
 		</div>
-
-		<div data-role="content">
-			您餐厅的数据：
- 
-			240
-			 
-			合理数据区间：
-			 
-			180~200
+		<div class="resultAnalasys_wapper">
+			<div>是否可以调整目前桌椅排列？</div>
+			<div>是否可以调整公共空间利间？</div>
+			<div>是否可以调整桌椅规格大小？</div>
 		</div>
 	</div>
 	
@@ -284,18 +268,6 @@
 					<li class="pop_ctzt_2"><div>健康型:2015-02-21</div></li>
 					<li class="pop_ctzt_3"><div>警惕性:2015-03-21</div></li>
 					<li class="pop_ctzt_4"><div>危机型:2015-04-21</div></li>
-					<li class="pop_ctzt_3"></li>
-					<li class="pop_ctzt_4"></li>
-					<li class="pop_ctzt_2"></li>
-					<li class="pop_ctzt_1"></li>
-					<li class="pop_ctzt_4"></li>
-					<li class="pop_ctzt_4"></li>
-					<li class="pop_ctzt_2"></li>
-					<li class="pop_ctzt_4"></li>
-					<li class="pop_ctzt_1"></li>
-					<li class="pop_ctzt_1"></li>
-					<li class="pop_ctzt_3"></li>
-					<li class="pop_ctzt_4"></li>
 				</ul>
 			</div>
 		</div>
@@ -342,7 +314,7 @@
 	
 	<script id="evalShopResult_template" type="text/html">
 	{{each validateBeanList as value i}}
-		<table class="tbl_{{ value.color }}" onclick="dispResultDetail('okkk');">
+		<table class="tbl_{{ value.color }}" onclick="dispResultDetail({{value.idx}}, '{{value.labelName}}', '{{value.scope}}', '{{value.normalRange}}','{{ value.statusLabel }}');">
 			<tr>
 				<td>{{ value.labelName }}</td>
 				<td>{{ value.normalRange }}</td>
@@ -357,6 +329,19 @@
 	{{each chartBeanList as value i}}
 		<li class="pop_ctzt_{{ value.statusTypeCode }}"><div>{{ value.statusTypeLabel }}&nbsp;{{ value.evaluateDate }}</div></li>
 	{{/each}}
+	</script>
+	
+	<script id="resultAnalasys_template" type="text/html">
+		<div class="header">
+			<div class="header-text">{{ labelName }} {{ statusLabel }}</div>
+			<div class="normal-range">{{ labelName }}合理范围:{{ normalRange }}</div>
+			<div class="scope">您的数据是:{{ scope }}</div>
+		</div>
+		<div class="resultAnalasys_wapper">
+		{{each evalTipsList as value i}}
+			<div>{{i+1}}.{{ value }}</div>
+		{{/each}}
+		</div>
 	</script>
 </body>
 </html>

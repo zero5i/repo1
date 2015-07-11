@@ -2,6 +2,7 @@ package com.jmh.server.service;
 
 import java.util.List;
 
+import com.jmh.server.bean.EvalPageBean;
 import com.jmh.server.entity.CityEntity;
 import com.jmh.server.entity.EvaluateEntity;
 import com.jmh.server.entity.ShopEntity;
@@ -94,7 +95,7 @@ public interface IEvalService {
 	 * @return <p>
 	 * EvaluateEntity
 	 */
-	public EvaluateEntity evalShop(ShopEntity shopEntity,	EvaluateEntity evaluateEntity);
+	public EvalPageBean evalShop(ShopEntity shopEntity,	EvaluateEntity evaluateEntity);
 	
 
 	/**

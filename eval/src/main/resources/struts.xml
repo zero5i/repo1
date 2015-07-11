@@ -69,7 +69,7 @@
 			<!-- 新建，更新店铺 -->
 			<result name="success" type="json">
 				<param name="includeProperties">  
-                    evaluateEntity.* 
+                    evalPageBean.* 
                 </param> 
 			</result>
 		</action>

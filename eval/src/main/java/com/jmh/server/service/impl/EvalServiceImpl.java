@@ -2,14 +2,20 @@ package com.jmh.server.service.impl;
 
 import java.math.BigDecimal;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jmh.server.bean.EvalPageBean;
+import com.jmh.server.bean.EvalValidateBean;
 import com.jmh.server.commom.EvalConstant;
 import com.jmh.server.commom.base.AbsBaseService;
+import com.jmh.server.commom.enmu.ColorType;
+import com.jmh.server.commom.enmu.EvalStatusType;
+import com.jmh.server.commom.enmu.EvalValidateType;
 import com.jmh.server.commom.exception.SampleServiceException;
 import com.jmh.server.commom.util.DateTimeUtil;
 import com.jmh.server.commom.util.WeixinUtil;
@@ -186,6 +192,11 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 	}
 
 	@Override
+	public UserEntity getUserByLoginToken(String loginToken) {
+		return userDao.selectUserByLoginToken(loginToken);
+	}
+	
+	@Override
 	public List<CityEntity> getProvinceList() {
 		return cityDao.selectProvinceList();
 	}
@@ -196,7 +207,9 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 	}
 
 	@Override
-	public EvaluateEntity evalShop(ShopEntity shopEntity, EvaluateEntity evaluate) {
+	public EvalPageBean evalShop(ShopEntity shopEntity, EvaluateEntity evaluate) {
+		
+		EvalPageBean retBean = new EvalPageBean();
 		
 		if(shopEntity == null){
 			throw new SampleServiceException("非法操作.");
@@ -215,8 +228,9 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		String currYearMonth = DateTimeUtil.getDateTimeStr(DateTimeUtil.PATTERN_21);
 		
-		BigDecimal val = this.getEvalValue(evaluate);
-				
+		BigDecimal evaluateValue = this.getEvalValue(evaluate);
+		retBean.setEvaluateValue(evaluateValue);
+		
 		Long shopId = shopEntity.getId();
 		
 		EvaluateEntity evalEntity = evaluateDao.selectEvaluate(shopId, currYearMonth);
@@ -225,14 +239,15 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 			evaluate.setShopId(shopId);
 			evaluate.setEvaluateDate(currYearMonth);
 
-			evaluate.setEvaluateValue(val);
+			evaluate.setEvaluateValue(evaluateValue);
 			
 			int evalRet = evaluateDao.insertEvaluate(evaluate);
 			if(evalRet == 0){
 				throw new SampleServiceException("评测数据创建失败.");
 			}
 			
-			return evaluate;
+			this.parseEvalValidateBean(shopEntity, evaluate, retBean);
+			return retBean;
 		}
 	
 		evalEntity.setMonthlyEnergy(evaluate.getMonthlyEnergy());
@@ -241,16 +256,131 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		evalEntity.setMonthlyRent(evaluate.getMonthlyRent());
 		evalEntity.setMonthlySalary(evaluate.getMonthlySalary());
 		evalEntity.setMonthlySales(evaluate.getMonthlySales());
-		
-		// TODO 评测值设定
-		evalEntity.setEvaluateValue(val);
+
+		evalEntity.setEvaluateValue(evaluateValue);
 		
 		evaluateDao.updateEvaluate(evalEntity);
 		
-		return evalEntity;
-		
+		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
+		return retBean;
 	}
 	
+	/**
+	 * <p>项目诊断结果设定
+	 * @param retBean <p>
+	 * void
+	 */
+	private void parseEvalValidateBean(ShopEntity shopEntity, EvaluateEntity evalEntity, EvalPageBean retBean){
+		
+		List<EvalValidateBean> validateBeanList = new ArrayList<EvalValidateBean>();
+		
+		int greeCnt = 0;
+		int yellowCnt = 0;
+		int redCnt = 0;
+		
+		float evaluateValue = evalEntity.getEvaluateValue().floatValue();
+		
+		// 前厅面积
+		BigDecimal spaceSize = shopEntity.getSpaceSize();
+		
+		// 餐位总数
+		Integer posCount = shopEntity.getPosCount();
+		
+		// 月销售额
+		BigDecimal monthlySales = evalEntity.getMonthlySales();
+				
+		// 月采购额
+		BigDecimal monthlyPurchase = evalEntity.getMonthlyPurchase();
+		
+		// 每月工资
+		BigDecimal monthlySalary = evalEntity.getMonthlySalary();
+		
+		// 每月租金
+		BigDecimal monthlyRent = evalEntity.getMonthlyRent();
+		 
+		// 每月能耗
+		BigDecimal monthlyEnergy = evalEntity.getMonthlyEnergy();
+		
+		// 其他开销
+		BigDecimal monthlyOtherPay = evalEntity.getMonthlyOtherPay();
+		
+		//  团购收入 
+		BigDecimal monthlyGroupBuy = evalEntity.getMonthlyGroupBuy();
+		
+		// 餐位数 评测值 = 前厅面积 / 餐位总数
+		EvalValidateBean bean1 = new EvalValidateBean();
+		float val1 = spaceSize.divide(BigDecimal.valueOf(posCount), 1, BigDecimal.ROUND_HALF_UP).floatValue();
+		if(val1 >= 1.2 && val1 <= 1.4){
+			bean1.setColor(ColorType.绿.getValue());
+			greeCnt++;
+		}else if((val1 >= 1.0 && val1 < 1.2) || (val1 > 1.4 && val1 <= 1.5)){
+			bean1.setColor(ColorType.黄.getValue());
+			yellowCnt++;
+		}else if(val1 < 1.0 || val1 > 1.5){
+			bean1.setColor(ColorType.红.getValue());
+			redCnt++;
+		}
+		bean1.setIdx(EvalValidateType.餐位数.getValue());
+		bean1.setLabelName(EvalValidateType.餐位数.getLabel());
+		bean1.setNormalRange("1.2~1.4");
+		bean1.setScope(String.valueOf(val1));
+		validateBeanList.add(bean1);
+		
+		// 毛利率 评测值 = （1 - 月采购额 / 月销售额）* 100%
+		EvalValidateBean bean2 = new EvalValidateBean();
+		float val2 = monthlyPurchase.divide(monthlySales, 2, BigDecimal.ROUND_HALF_UP).floatValue();
+		val2 = (1 - val2) * 100;
+		if(val2 >= 63 && val2 <= 70){
+			bean2.setColor(ColorType.绿.getValue());
+			greeCnt++;
+		}else if(val2 >= 58 && val2 < 63){
+			bean2.setColor(ColorType.黄.getValue());
+			yellowCnt++;
+		}else if(val2 < 58){
+			bean2.setColor(ColorType.红.getValue());
+			redCnt++;
+		}
+		bean2.setIdx(EvalValidateType.毛利率.getValue());
+		bean2.setLabelName(EvalValidateType.毛利率.getLabel());
+		bean2.setNormalRange("63%~70%");
+		bean2.setScope(String.valueOf(val2) + "%");
+		validateBeanList.add(bean2);
+		
+		retBean.setValidateBeanList(validateBeanList);
+		
+		// 状况类型设定 TODO
+		
+		// 扩张型 绿 >= 5项，且盈利
+		if(evaluateValue > 0 && greeCnt >= 5){
+			retBean.setEvalType(EvalStatusType.扩张型.getLabel());
+			retBean.setEvalTypeMsg(EvalStatusType.扩张型.getMsg());
+		}
+		
+		// 健康型 绿+黄 >= 6项，且盈利
+		if(evaluateValue > 0 && (greeCnt + yellowCnt) >= 6){
+			retBean.setEvalType(EvalStatusType.健康型.getLabel());
+			retBean.setEvalTypeMsg(EvalStatusType.健康型.getMsg());
+		}		
+
+		// 警惕型 3 <= 绿+黄 <= 5
+		if((greeCnt + yellowCnt) >= 3 && (greeCnt + yellowCnt) <= 5){
+			retBean.setEvalType(EvalStatusType.警惕型.getLabel());
+			retBean.setEvalTypeMsg(EvalStatusType.警惕型.getMsg());
+		}
+		
+		// 危机型 0 <= 绿+黄 <= 2
+		if((greeCnt + yellowCnt) >= 0 && (greeCnt + yellowCnt) <= 2){
+			retBean.setEvalType(EvalStatusType.危机型.getLabel());
+			retBean.setEvalTypeMsg(EvalStatusType.危机型.getMsg());
+		}
+	}
+	
+	/**
+	 * <p>取得评测总分
+	 * @param evaluate
+	 * @return <p>
+	 * BigDecimal
+	 */
 	private BigDecimal getEvalValue(EvaluateEntity evaluate){
 
 		// 月销售额
@@ -279,8 +409,4 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		return val;
 	}
 
-	@Override
-	public UserEntity getUserByLoginToken(String loginToken) {
-		return userDao.selectUserByLoginToken(loginToken);
-	}
 }

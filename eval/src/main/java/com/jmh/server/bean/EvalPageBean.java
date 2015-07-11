@@ -14,7 +14,7 @@ public class EvalPageBean {
 	/**
 	 * 扩张型.健康型..警惕型.危机型.危险呢
 	 */
-	private int evalType;
+	private String evalType;
 	
 	/**
 	 * 评测类型提醒消息
@@ -46,7 +46,7 @@ public class EvalPageBean {
 	 * <p>获取 扩张型.健康型..警惕型.危机型.危险呢</p>
 	 * @return  evalType  扩张型.健康型..警惕型.危机型.危险呢<br>
 	 */
-	public int getEvalType() {
+	public String getEvalType() {
 		return evalType;
 	}
 
@@ -54,7 +54,7 @@ public class EvalPageBean {
 	 * <p>设置 扩张型.健康型..警惕型.危机型.危险呢</p>
 	 * @param  evalType  扩张型.健康型..警惕型.危机型.危险呢<br>
 	 */
-	public void setEvalType(int evalType) {
+	public void setEvalType(String evalType) {
 		this.evalType = evalType;
 	}
 

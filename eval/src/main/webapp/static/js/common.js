@@ -228,13 +228,15 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		        data : $('#shopForm').serialize(),
 		        success : function(data, status){
 		        	
-		        	if(!data || !data.evaluateEntity){
+		        	if(!data || !data.evalPageBean){
 		        		alert("评测失败，请重新打开微信后再试.");
 			        	$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
 			        	return;
 		        	}
 		        	
-		        	var val = data.evaluateEntity.evaluateValue;
+		        	var pageBean = data.evalPageBean;
+		        	
+		        	var val = pageBean.evaluateValue;
 		        	
 		        	$('#evalShopPage_zt1').hide();
 		        	$('#evalShopPage_zt2').hide();

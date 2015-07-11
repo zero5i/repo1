@@ -2,23 +2,21 @@ package com.jmh.server.action;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.jmh.server.bean.EvalPageBean;
 import com.jmh.server.entity.CityEntity;
 import com.jmh.server.entity.EvaluateEntity;
 import com.jmh.server.entity.ShopEntity;
 import com.jmh.server.entity.UserEntity;
 import com.jmh.server.service.IEvalService;
-import com.opensymphony.xwork2.ActionContext;
 
 
 public class EvalController {
 	
 	private static Logger logger = Logger.getLogger(EvalController.class);  
-	private static final String SESSION_USER = "session.user";
 	
 	@Autowired
 	private IEvalService evalService;
@@ -52,6 +50,11 @@ public class EvalController {
 	 * 店铺月开支
 	 */
 	private EvaluateEntity evaluateEntity = new EvaluateEntity();
+	
+	/**
+	 * 评测结果Bean
+	 */
+	private EvalPageBean evalPageBean;
 	
 	/**
 	 * 店铺列表
@@ -127,13 +130,14 @@ public class EvalController {
 		
         UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
         if(user == null){
-        	this.evaluateEntity = null;
+        	this.evalPageBean = null;
         	return "success";
         }
 		
         this.shopEntity.setUserId(user.getId());
         
-		this.evaluateEntity = evalService.evalShop(this.shopEntity, this.evaluateEntity);
+        // 取得评测结果
+		this.evalPageBean = evalService.evalShop(this.shopEntity, this.evaluateEntity);
 		
 		return "success";
 	}
@@ -273,5 +277,37 @@ public class EvalController {
 	 */
 	public void setLoginToken(String loginToken) {
 		this.loginToken = loginToken;
+	}
+
+	/**
+	 * <p>获取 evalService</p>
+	 * @return  evalService  evalService<br>
+	 */
+	public IEvalService getEvalService() {
+		return evalService;
+	}
+
+	/**
+	 * <p>设置 evalService</p>
+	 * @param  evalService  evalService<br>
+	 */
+	public void setEvalService(IEvalService evalService) {
+		this.evalService = evalService;
+	}
+
+	/**
+	 * <p>获取 评测结果Bean</p>
+	 * @return  evalPageBean  评测结果Bean<br>
+	 */
+	public EvalPageBean getEvalPageBean() {
+		return evalPageBean;
+	}
+
+	/**
+	 * <p>设置 评测结果Bean</p>
+	 * @param  evalPageBean  评测结果Bean<br>
+	 */
+	public void setEvalPageBean(EvalPageBean evalPageBean) {
+		this.evalPageBean = evalPageBean;
 	}
 }

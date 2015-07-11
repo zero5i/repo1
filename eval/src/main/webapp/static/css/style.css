@@ -321,6 +321,18 @@ input::-webkit-inner-spin-button {
 	font-size: 18px;
 	color: #fff;
 }
+
+#insert_edit_shop_page .main_holder .main_table .td_middle .one_3_1 div:last-child{
+	position:absolute;
+	top:3px;
+	right:5px;
+	height:30px;
+	width:25px;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+}
+
 #insert_edit_shop_page .main_holder .main_table .td_middle select{
 	margin: 9px 15px 0 auto;
 	padding-right:30px;
@@ -355,7 +367,9 @@ input::-webkit-inner-spin-button {
 
 #insert_edit_shop_page .main_holder .main_table .td_middle .one_3_1 input,
 #insert_edit_shop_page .main_holder .main_table .td_middle .one_3_2 input {
-	margin: 9px 30px 0 auto;
+	position:absolute;
+	right:25px;
+	margin: 9px 5px 0 auto;
 	background: transparent;
 	border: 0;
 	color:#fff;

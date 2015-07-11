@@ -30,6 +30,11 @@ public class EvalPageBean {
 	 * 项目诊断结果列表
 	 */
 	private List<EvalValidateBean> validateBeanList = new ArrayList<EvalValidateBean>();
+	
+	/**
+	 * 评测走势图列表
+	 */
+	private List<EvalChartBean> chartBeanList = new ArrayList<EvalChartBean>();
 
 	/**
 	 * <p>获取 评测得分</p>
@@ -109,6 +114,22 @@ public class EvalPageBean {
 	 */
 	public void setEvalTypeCode(int evalTypeCode) {
 		this.evalTypeCode = evalTypeCode;
+	}
+
+	/**
+	 * <p>获取 评测走势图列表</p>
+	 * @return  chartBeanList  评测走势图列表<br>
+	 */
+	public List<EvalChartBean> getChartBeanList() {
+		return chartBeanList;
+	}
+
+	/**
+	 * <p>设置 评测走势图列表</p>
+	 * @param  chartBeanList  评测走势图列表<br>
+	 */
+	public void setChartBeanList(List<EvalChartBean> chartBeanList) {
+		this.chartBeanList = chartBeanList;
 	}
 	
 	

@@ -18,7 +18,17 @@ public enum EvalStatusType {
 		this.code = code;
 		this.msg = msg;
 	}
-
+	
+	// 普通方法
+	public static String getLabel(int code) {
+		for (EvalStatusType c : EvalStatusType.values()) {
+			if ( c.getCode() == code ) {
+				return c.label;
+			}
+		}
+		return null;
+	}
+	
 	public String getLabel() {
 		return label;
 	}

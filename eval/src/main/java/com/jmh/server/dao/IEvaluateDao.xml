@@ -25,6 +25,7 @@
 		from t_evaluate
 		where
 			shop_id = #{shopId}
+		order by evaluate_date asc
     </select>
     
     <select id="selectEvaluateById"  resultMap="evalResultMap">

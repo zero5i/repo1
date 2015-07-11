@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jmh.server.bean.EvalChartBean;
 import com.jmh.server.bean.EvalPageBean;
 import com.jmh.server.bean.EvalValidateBean;
 import com.jmh.server.commom.EvalConstant;
@@ -540,6 +541,23 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 评测结果类型Code设定
 		evalEntity.setStatusTypeCode(retBean.getEvalTypeCode());
+		
+		// 评测趋势图转换
+		List<EvalChartBean> chartBeanList = new ArrayList<EvalChartBean>();
+		
+		List<EvaluateEntity> evaluateList = evaluateDao.selectEvaluateListByShopId(shopEntity.getId());
+		for(EvaluateEntity e : evaluateList){
+			EvalChartBean chart = new EvalChartBean();
+			
+			chart.setEvaluateValue(e.getEvaluateValue());
+			chart.setEvaluateDate(e.getEvaluateDate());
+			chart.setStatusTypeCode(e.getStatusTypeCode());
+			chart.setStatusTypeLabel(EvalStatusType.getLabel(e.getStatusTypeCode()));
+			chartBeanList.add(chart);
+		}
+		
+		// 评测趋势图设定
+		retBean.setChartBeanList(chartBeanList);
 	}
 	
 	/**

@@ -278,24 +278,24 @@
 	<!-- 经营趋势 -->	
 	<div data-role="page" id="eval_detail_chart">
 		<div id="wrapper">
-			<div id="scroller">
+			<div id="chartScroller">
 				<ul>
-					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
-					<li class="pop_ctzt2" style="background-position-y: 50%;"></li>
-					<li class="pop_ctzt3" style="background-position-y: 60%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 20%;"></li>
-					<li class="pop_ctzt3" style="background-position-y: 70%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 60%;"></li>
-					<li class="pop_ctzt2" style="background-position-y: 30%;"></li>
-					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 70%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 40%;"></li>
-					<li class="pop_ctzt2" style="background-position-y: 20%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 10%;"></li>
-					<li class="pop_ctzt1" style="background-position-y: 20%;"></li>
-					<li class="pop_ctzt1" style="background-position-y: 30%;"></li>
-					<li class="pop_ctzt3" style="background-position-y: 40%;"></li>
-					<li class="pop_ctzt4" style="background-position-y: 70%;"></li>
+					<li class="pop_ctzt_1"><div>扩展性:2015-01-21</div></li>
+					<li class="pop_ctzt_2"><div>健康型:2015-02-21</div></li>
+					<li class="pop_ctzt_3"><div>警惕性:2015-03-21</div></li>
+					<li class="pop_ctzt_4"><div>危机型:2015-04-21</div></li>
+					<li class="pop_ctzt_3"></li>
+					<li class="pop_ctzt_4"></li>
+					<li class="pop_ctzt_2"></li>
+					<li class="pop_ctzt_1"></li>
+					<li class="pop_ctzt_4"></li>
+					<li class="pop_ctzt_4"></li>
+					<li class="pop_ctzt_2"></li>
+					<li class="pop_ctzt_4"></li>
+					<li class="pop_ctzt_1"></li>
+					<li class="pop_ctzt_1"></li>
+					<li class="pop_ctzt_3"></li>
+					<li class="pop_ctzt_4"></li>
 				</ul>
 			</div>
 		</div>
@@ -334,7 +334,7 @@
 	
 	<script id="evalShopResult_template" type="text/html">
 	{{each validateBeanList as value i}}
-		<table class="tbl_{{value.color}}" >
+		<table class="tbl_{{ value.color }}" >
 			<tr>
 				<td>{{ value.labelName }}</td>
 				<td>{{ value.normalRange }}</td>
@@ -342,6 +342,12 @@
 				<td>{{ value.evalTips }}</td>
 			</tr>
 		</table>
+	{{/each}}
+	</script>
+	
+	<script id="evalShopChart_template" type="text/html">
+	{{each chartBeanList as value i}}
+		<li class="pop_ctzt_{{ value.statusTypeCode }}"><div>{{ value.statusTypeLabel }}&nbsp;{{ value.evaluateDate }}</div></li>
 	{{/each}}
 	</script>
 </body>

@@ -1,7 +1,6 @@
 package com.jmh.server.service.impl;
 
 import java.math.BigDecimal;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jmh.server.bean.EvalChartBean;
 import com.jmh.server.bean.EvalPageBean;
 import com.jmh.server.bean.EvalValidateBean;
+import com.jmh.server.bean.WeixinJsSDKBean;
 import com.jmh.server.commom.EvalConstant;
 import com.jmh.server.commom.base.AbsBaseService;
 import com.jmh.server.commom.enmu.ColorType;
@@ -91,9 +91,8 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 			return null;
 		}
 		
-		String s = userEntity.getId() + DateTimeUtil.getCurrentTime();
-		
-		String loginToken = this.encryptLoginToken(s);
+		// 取得随机字符串作为登陆Token
+		String loginToken = WeixinUtil.getRandomNoncestr();
 		
 		userEntity.setLoginToken(loginToken);
 		
@@ -101,33 +100,7 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		return ret == 0 ? null : userEntity;
 	}
-	
-	private  String encryptLoginToken(String s) {
-        char hexDigits[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};       
-        try {
-            byte[] btInput = s.getBytes();
-            // 获得MD5摘要算法的 MessageDigest 对象
-            MessageDigest mdInst = MessageDigest.getInstance("MD5");
-            // 使用指定的字节更新摘要
-            mdInst.update(btInput);
-            // 获得密文
-            byte[] md = mdInst.digest();
-            // 把密文转换成十六进制的字符串形式
-            int j = md.length;
-            char str[] = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
-            }
-            return new String(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-	
+		
 	/**
 	 * 获取微信持久状态的AccessToken<p>
 	 * @return <p>
@@ -677,6 +650,27 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		List<String> evalTips = EvalValidateType.getTips(idx);
 		
 		return evalTips;
+	}
+
+	/**
+	 * 取得微信JSSDK所需参数
+	 */
+	@Override
+	public WeixinJsSDKBean getWeixinJsSDKInfo(String url) {
+
+        WeixinJsSDKBean weixin = new WeixinJsSDKBean();
+        
+        weixin.setAppId(WeixinUtil.getAppId());
+        weixin.setNonceStr(WeixinUtil.getRandomNoncestr());
+        weixin.setTimestamp(WeixinUtil.getRandomTimestamp());
+
+		String jsapiTicket = this.getJsapiTicket();
+		
+		String signature = WeixinUtil.GetSignature(weixin.getTimestamp(), weixin.getNonceStr(), url, jsapiTicket);
+		
+		weixin.setSignature(signature);
+		
+		return weixin;
 	}
 
 }

@@ -373,7 +373,7 @@ input::-webkit-inner-spin-button {
 	background: transparent;
 	border: 0;
 	color:#fff;
-	width:50%;
+	width:100px;
 	text-align:right;
 	height:25px;
 	font-size: 18px;

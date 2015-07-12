@@ -3,10 +3,14 @@ package com.jmh.server.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jmh.server.bean.EvalPageBean;
+import com.jmh.server.bean.WeixinJsSDKBean;
 import com.jmh.server.entity.CityEntity;
 import com.jmh.server.entity.EvaluateEntity;
 import com.jmh.server.entity.ShopEntity;
@@ -74,12 +78,13 @@ public class EvalController {
 	 */
 	private List<String> evalTipsList;
 	
+	/**
+	 * 微信相关参数信息
+	 */
+	private WeixinJsSDKBean weixinJsSDKBean;
+	
 	public String index() {
 		
-		String accessToken = evalService.getAccessToken();
-		logger.debug(accessToken);
-		String jsapiTicket = evalService.getJsapiTicket();
-		logger.debug(jsapiTicket);
 		//String code = request.getParameter("code");
 		/*
 		if(code == null){
@@ -94,7 +99,10 @@ public class EvalController {
 		
 		String openId = WeixinUtil.getOpenId(weixinAppId, weixinAppSecret, code);
 		*/
+		
+		// TODO DUMMY
 		String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
+		
 		UserEntity user = evalService.getUserByOpenId(openId);
 		
 		if(user == null){
@@ -103,9 +111,25 @@ public class EvalController {
 		
 		this.loginToken = user.getLoginToken();
 		
-		this.shopList = evalService.getShopListByUserId(user.getId());
-		
-		//model.addAttribute("shopList", shopList);
+		//this.shopList = evalService.getShopListByUserId(user.getId());
+		return SUCCESS;
+	}
+	
+	/**
+	 * <p>页面首页跳转目标
+	 * @return <p>
+	 * String
+	 */
+	public String f_index(){
+		UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
+        if(user == null){
+        	return INPUT;
+        }
+        HttpServletRequest request =  ServletActionContext.getRequest();
+        this.weixinJsSDKBean = evalService.getWeixinJsSDKInfo(request.getRequestURL().toString());
+        
+        this.shopList = evalService.getShopListByUserId(user.getId());
+        
 		return SUCCESS;
 	}
 	
@@ -120,7 +144,7 @@ public class EvalController {
         if(user == null){
         	this.shopEntity = null;
         	this.cityList = null;
-        	return "success";
+        	return SUCCESS;
         }
         
 		if(shopId > 0){
@@ -381,5 +405,21 @@ public class EvalController {
 	 */
 	public void setEvalTipsList(List<String> evalTipsList) {
 		this.evalTipsList = evalTipsList;
+	}
+
+	/**
+	 * <p>获取 微信相关参数信息</p>
+	 * @return  weixinJsSDKBean  微信相关参数信息<br>
+	 */
+	public WeixinJsSDKBean getWeixinJsSDKBean() {
+		return weixinJsSDKBean;
+	}
+
+	/**
+	 * <p>设置 微信相关参数信息</p>
+	 * @param  weixinJsSDKBean  微信相关参数信息<br>
+	 */
+	public void setWeixinJsSDKBean(WeixinJsSDKBean weixinJsSDKBean) {
+		this.weixinJsSDKBean = weixinJsSDKBean;
 	}
 }

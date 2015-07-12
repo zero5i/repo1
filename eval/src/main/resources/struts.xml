@@ -38,10 +38,13 @@
 	<!-- <constant name="struts.multipart.maxSize" value="50000000000" /> -->
 	<package name="base" extends="struts-default" namespace="/">
 		<action name="index" class="com.jmh.server.action.EvalController" method="index">
-			<result name="success">views/index.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">f_index</param> 
+				<param name="loginToken">${loginToken}</param>
+			</result>
 		</action>
 		
-		<action name="detail" class="com.jmh.server.action.EvalController" method="detail">
+		<action name="f_index" class="com.jmh.server.action.EvalController" method="f_index">
 			<result name="success">views/index.jsp</result>
 		</action>
 	</package>

@@ -1,6 +1,11 @@
 package com.jmh.server.commom.util;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
+import java.util.UUID;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -18,12 +23,57 @@ import org.apache.http.util.EntityUtils;
 public class WeixinUtil {
 	
 	/**
+	 * <p>取得公共号的appid
+	 * @return <p>
+	 * String
+	 */
+	public static String getAppId(){
+		return CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
+	}
+	
+	public static String getSecretId(){
+		return CustomizedPropertyConfigurer.getContextProperty("weixin.app.secret");
+	}
+	
+	/**
+	 * 取得签名signature
+	 * 
+	 * @param timestamp
+	 * @param nonceStr
+	 * @param url
+	 * @return
+	 */
+	public static String GetSignature(String timestamp, String nonceStr, String url, String ticket) {
+		String signature = null;
+		String string1 = "jsapi_ticket=" + ticket +
+                "&noncestr=" + nonceStr +
+                "&timestamp=" + timestamp +
+                "&url=" + url;
+		// 对string1进行sha1签名，得到signature
+		try {
+			MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+			crypt.reset();
+			crypt.update(string1.getBytes("utf-8"));
+			byte[] hash = crypt.digest();
+			Formatter formatter = new Formatter();
+			for (byte b : hash) {
+				formatter.format("%02x", b);
+			}
+			signature = formatter.toString();
+			formatter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return signature;
+	}
+	
+	/**
 	 * <p>取得随机noncestr
 	 * @return <p>
 	 * String
 	 */
 	public static String getRandomNoncestr(){
-		return DateTimeUtil.getCurrentTime();
+		return UUID.randomUUID().toString();
 	}
 		
 	/**
@@ -38,18 +88,17 @@ public class WeixinUtil {
 	}
 	
 	/**
-	 * <p>获取微信的AccessToken
+	 * <p>获取微信的AccessToken(调用此方法不能太频繁，每天有次数限制)
 	 * @return <p>
 	 * String
 	 */
 	public static String getRemoteAccessToken(){
 
-
 		// 微信App.id
-		String secretId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.secret");
+		String secretId = getSecretId();
 		
 		// 微信App.id
-		String appId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
+		String appId = getAppId();
 		
 		
 		String apiUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=S_APPID&secret=S_APPSECRET";
@@ -68,7 +117,7 @@ public class WeixinUtil {
 	
 
 	/**
-	 * <p>获取微信的AccessToken
+	 * <p>获取微信的AccessToken(调用此方法不能太频繁，每天有次数限制)
 	 * @return <p>
 	 * String
 	 */
@@ -94,10 +143,10 @@ public class WeixinUtil {
 	public static String getRemoteOpenId(String code) {
 		
 		// 微信App.id
-		String secretId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.secret");
+		String secretId = getSecretId();
 		
 		// 微信App.id
-		String appId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
+		String appId = getAppId();
 		
 		String apiUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=S_APPID&secret=S_APPSECRET&code=S_CODE&grant_type=authorization_code";
 		
@@ -144,7 +193,7 @@ public class WeixinUtil {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.print(getRandomTimestamp());
+		System.out.print(getAppId());
 	}
 
 }

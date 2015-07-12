@@ -3,6 +3,7 @@ package com.jmh.server.service;
 import java.util.List;
 
 import com.jmh.server.bean.EvalPageBean;
+import com.jmh.server.bean.WeixinJsSDKBean;
 import com.jmh.server.entity.CityEntity;
 import com.jmh.server.entity.EvaluateEntity;
 import com.jmh.server.entity.ShopEntity;
@@ -121,4 +122,11 @@ public interface IEvalService {
 	 * EvalValidateBean
 	 */
 	public List<String> getEvalValidateBean(int idx);
+	
+	/**
+	 * <p> 取得微信JSSDK所需参数
+	 * @return <p>
+	 * WeixinJsSDKBean
+	 */
+	public WeixinJsSDKBean getWeixinJsSDKInfo(String url);
 }

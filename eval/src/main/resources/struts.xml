@@ -59,6 +59,15 @@
 			</result>
 		</action>
 		
+		<action name="findShopList" class="com.jmh.server.action.EvalController" method="findShopList">
+			<!-- 店铺列表Json取得 -->
+			<result name="success" type="json">
+				<param name="includeProperties">  
+                    shopList.*
+                </param> 
+			</result>
+		</action>
+		
 		<action name="findCityList" class="com.jmh.server.action.EvalController" method="findCityList">
 			<!-- 区市列表取得 -->
 			<result name="success" type="json">

@@ -196,6 +196,22 @@ public class EvalController {
 	}
 	
 	/**
+	 * <p>取得名下店铺列表</p>
+	 * @return
+	 */
+	public String findShopList(){
+		
+		UserEntity user = (UserEntity)evalService.getUserByLoginToken(this.loginToken);
+        if(user == null){
+        	this.evalPageBean = null;
+        	return SUCCESS;
+        }
+        
+		this.shopList = evalService.getShopListByUserId(user.getId());
+		return SUCCESS;
+	}
+	
+	/**
 	 * <p>通过店铺ID取得该店铺所有评测记录</p>
 	 * @return 
 	 * String

@@ -242,6 +242,8 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 				throw new SampleServiceException("评测数据创建失败.");
 			}
 			
+			this.parseChartBeanList(shopId, retBean);
+			
 			return retBean;
 		}
 	
@@ -258,6 +260,8 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
 		
 		evaluateDao.updateEvaluate(evalEntity);
+		
+		this.parseChartBeanList(shopId, retBean);
 		
 		return retBean;
 	}
@@ -557,11 +561,17 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		// 评测结果类型Code设定
 		evalEntity.setStatusTypeCode(retBean.getEvalTypeCode());
-		
-		// 评测趋势图转换
+	}
+	
+	/**
+	 * 评测趋势图转换
+	 * @param shopId
+	 * @param retBean
+	 */
+	private void parseChartBeanList(long shopId, EvalPageBean retBean){
 		List<EvalChartBean> chartBeanList = new ArrayList<EvalChartBean>();
 		
-		List<EvaluateEntity> evaluateList = evaluateDao.selectEvaluateListByShopId(shopEntity.getId());
+		List<EvaluateEntity> evaluateList = evaluateDao.selectEvaluateListByShopId(shopId);
 		for(EvaluateEntity e : evaluateList){
 			EvalChartBean chart = new EvalChartBean();
 			
@@ -616,28 +626,17 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		
 		EvalPageBean retBean = new EvalPageBean();
 		
+		// 通过店铺Id取得店铺信息
 		ShopEntity shopEntity = shopDao.selectShopById(shopId);
+		
+		// 通过店铺取得最近一次的评测信息
 		EvaluateEntity evalEntity = evaluateDao.selectLatestEvaluateByShopId(shopId);
 		
+		// 评测店铺
 		this.parseEvalValidateBean(shopEntity, evalEntity, retBean);
 		
-		/*
-		// 评测趋势图转换
-		List<EvalChartBean> chartBeanList = new ArrayList<EvalChartBean>();
-		
-		List<EvaluateEntity> evaluateList = evaluateDao.selectEvaluateListByShopId(shopId);
-		for(EvaluateEntity e : evaluateList){
-			EvalChartBean chart = new EvalChartBean();
-			
-			chart.setEvaluateValue(e.getEvaluateValue());
-			chart.setEvaluateDate(e.getEvaluateDate());
-			chart.setStatusTypeCode(e.getStatusTypeCode());
-			chart.setStatusTypeLabel(EvalStatusType.getLabel(e.getStatusTypeCode()));
-			chartBeanList.add(chart);
-		}
-		
-		// 评测趋势图设定
-		retBean.setChartBeanList(chartBeanList);*/
+		// 评测趋势图转换设定
+		this.parseChartBeanList(shopId, retBean);
 		
 		return retBean;
 	}

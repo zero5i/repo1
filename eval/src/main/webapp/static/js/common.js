@@ -65,6 +65,44 @@ function redirectDetailChart(shopId){
     });
 }
 
+/**
+ * 取得名下所有店铺列表
+ */
+function redirectShopList(){
+	$.ajax({ 
+        type : "GET", 
+        dataType: 'json',
+        url  : "ajax/findShopList.action",  
+        cache : false, 
+        data : {loginToken : loginToken},
+        success : function(data, status){
+        	
+        	if(!data && !data.shopList){
+        		alert("获取店铺列表失败，请重新打开微信后再试.");
+        		return;
+        	}
+        	
+        	if(data.shopList.length == 0){
+        		$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
+        		return;
+        	}
+        	
+        	/*var html = template('evalShopList_template', data);
+        	$("#shopScroller").html(html);
+        	*/
+        	
+        	$.mobile.changePage( "#shop_list_page", { 
+    		    transition: "slideup", 
+    		    changeHash: true,		    
+    		});
+        }, 
+        error : function(data,status){
+        	console.log(data);
+        	alert("获取店铺列表失败，请重新打开微信后再试.");
+        } 
+    });
+}
+
 function redirectEidt(shopId){
 	//location.href = "detail.action?shopId="+id;
 	//$.mobile.changePage("detail.action?shopId="+id, {transition:"slide",reverse:false}, true, true);
@@ -102,39 +140,46 @@ function redirectEidt(shopId){
 };	
 
 $(document).on("pageshow","#index_page",function(){ 
-	$("#index_page input[type='image']").attr('src','./static/images/first/1_anniu1.png');
+	
 });
 
 $(document).on("pageinit","#index_page", function(){
 	$("#index_page input[type='image']").on("tap",function(){
-		$(this).attr('src','./static/images/first/1_anniu2.png');
-		$.mobile.changePage( "#shop_list_page", { 
-		    transition: "slideup", 
-		    changeHash: true,		    
-		});
+		var currObj = $(this);
+		currObj.attr('src','./static/images/first/1_anniu2.png');
+		setTimeout(function(){
+			currObj.attr('src','./static/images/first/1_anniu1.png');
+			redirectShopList();
+		}, 200);
 	});
 });
 
 
 $(document).on("pageshow","#shop_list_page",function(){ // 当进入页面二时
-	$("#shop_list_page input[type='image']").attr('src','./static/images/sec/2_anniu1.png');
+	
 });
 
 $(document).on("pageinit","#shop_list_page", function(){
 	$("#shop_list_page input[type='image']").on("tap",function(){
-		$(this).attr('src','./static/images/sec/2_anniu2.png');
-		//$.mobile.changePage("detail.action", {transition:"slide",reverse:false}, true, true);
 		
-		$("#shopPage_id").val("");
-    	$("#shopPage_provinceId").val("0");
-    	$("#shopPage_cityId").val("");
-    	$("#shopPage_typeCode").val("0");
-    	$('#shopPage_shopName').val("");
-    	$('#shopPage_posCnt').val("");
-    	$('#shopPage_perPay').val("");
-    	$('#shopPage_spaceSize').val("");
-    	
-		$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
+		var currObj = $(this);
+		
+		currObj.attr('src','./static/images/sec/2_anniu2.png');
+		
+		setTimeout(function(){
+			currObj.attr('src','./static/images/sec/2_anniu1.png');
+			
+			$("#shopPage_id").val("");
+	    	$("#shopPage_provinceId").val("0");
+	    	$("#shopPage_cityId").val("");
+	    	$("#shopPage_typeCode").val("0");
+	    	$('#shopPage_shopName').val("");
+	    	$('#shopPage_posCnt').val("");
+	    	$('#shopPage_perPay').val("");
+	    	$('#shopPage_spaceSize').val("");
+	    	
+			$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
+		}, 200);
 	});
 }); 
 

@@ -226,13 +226,13 @@
 								<div>元</div>  
 							</div>
 							<div class="one_3_1">
-								<div>10</div>
+								<div>11</div>
 								<div>团购收入:</div>
 								<s:textfield type="tel" name="evaluateEntity.monthlyGroupBuy" id="shopPage_monthlyGroupBuy" data-role="none" maxlength="8"/>
 								<div>元</div>  
 							</div>
 							<div class="one_3_1" style="margin-bottom:0">
-								<div>10</div>
+								<div>12</div>
 								<div>其它开销:</div>
 								<s:textfield type="tel" name="evaluateEntity.monthlyOtherPay" id="shopPage_monthlyOtherPay" data-role="none" maxlength="8"/>
 								<div>元</div>  
@@ -273,7 +273,7 @@
 			<img id="evalShopPage_zt3" src="${ctx}/static/images/result/zt3.png">
 			<img id="evalShopPage_zt4" src="${ctx}/static/images/result/zt4.png">
 		</div>
-
+		
 		<div class="footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/result/anniu1.png"/>
 		</div>
@@ -284,7 +284,10 @@
 		<div id="evalType_header"></div>
 		<div class="first_canting"></div>
 		<div class="type_saomiaoxian"></div>
-		<div class="footer">
+		
+		<div class="first_shou"></div>
+		
+		<div class="first_footer">
 			<input type="image" style="width:280px" src="${ctx}/static/images/type/anniu.png"/>
 		</div>
 	</div>
@@ -393,6 +396,10 @@
 	{{each chartBeanList as value i}}
 		<li class="pop_ctzt_{{ value.statusTypeCode }}"><div>{{ value.statusTypeLabel }}&nbsp;{{ value.evaluateDate }}</div></li>
 	{{/each}}
+	</script>
+	
+	<script id="evalShopList_template" type="text/html">
+		
 	</script>
 	
 	<script id="resultAnalasys_template" type="text/html">

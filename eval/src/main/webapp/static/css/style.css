@@ -109,7 +109,7 @@ input::-webkit-inner-spin-button {
 0%   {background-size: 55% 100%;}
 100% {background-size: 50% 90%;}
 }
-#index_page .first_shou {
+.first_shou {
 	width: 100%;
 	height: 140px;
 	background-position:center;

@@ -397,7 +397,8 @@ input::-webkit-inner-spin-button {
 } 
 
 /* 评测结果页 */
-#eval_shop_page div:nth-child(1) img{
+#eval_shop_page div:nth-child(1) img,
+#advise_page  div:nth-child(1) img{
 	margin:20px auto;
 	width:300px;
 } 

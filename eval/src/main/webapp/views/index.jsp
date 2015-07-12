@@ -351,12 +351,16 @@
 	</div>
 	
 	<div data-role="page" id="advise_page">
-		<div data-role="header">
-			<h1>欢迎来到我的主页</h1>
+		<div>
+			<img id="evalAdvisePage_topImage" src="">
 		</div>
 
-		<div data-role="content">
-			意见建议详细信息
+		<div>
+			<div>
+				<textarea rows="3" cols="10" id="advise_msg"></textarea>
+			</div>
+			<div style="font-size:20px;"><a href="tel:13621699285">拨打电话</a></div>
+			<div style="font-size:20px;"><a href="#">发送消息</a></div>
 		</div>
 
 		<div class="footer">

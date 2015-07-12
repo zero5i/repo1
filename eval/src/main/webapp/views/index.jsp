@@ -72,8 +72,10 @@
 		<div class="first_canting"></div>
 		
 		<div class="first_saomiaoxian"></div>
-
-		<div class="footer">
+		
+		<div class="first_shou"></div>
+		
+		<div class="first_footer">
 			<input type="image" width="280px" style="border: 0" src="${ctx}/static/images/first/1_anniu1.png"/>
 		</div>
 	</div>

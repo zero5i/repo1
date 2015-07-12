@@ -292,8 +292,8 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		// 餐位总数
 		Integer posCount = shopEntity.getPosCount();
 		
-		// 菜品数量 // TODO 
-		int foodCnt = 0;
+		// 菜品数量 
+		Integer foodCount = shopEntity.getFoodCount();
 		
 		// 月销售额
 		BigDecimal monthlySales = evalEntity.getMonthlySales();
@@ -367,52 +367,52 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		EvalValidateBean bean3 = new EvalValidateBean();		
 		// 前厅面积小于100平方米
 		if(spaceSize.intValue() <= 100){
-			if(foodCnt >= 80 && foodCnt <= 100){
+			if(foodCount >= 80 && foodCount <= 100){
 				bean3.setColor(ColorType.绿.getValue());
 				bean3.setStatusLabel(ColorType.绿.getTips());
 				greeCnt++;
-			}else if((foodCnt >= 60 && foodCnt < 80) || (foodCnt > 100 && foodCnt <= 120)){
+			}else if((foodCount >= 60 && foodCount < 80) || (foodCount > 100 && foodCount <= 120)){
 				bean3.setColor(ColorType.黄.getValue());
 				bean3.setStatusLabel(ColorType.黄.getTips());
 				yellowCnt++;
-			}else if(foodCnt < 80 || foodCnt > 120){
+			}else if(foodCount < 80 || foodCount > 120){
 				bean3.setColor(ColorType.红.getValue());
 				bean3.setStatusLabel(ColorType.红.getTips());
 				redCnt++;
 			}
 			bean3.setNormalRange("80~100");
 		}else if(spaceSize.intValue() > 100 && spaceSize.intValue() < 150){
-			if(foodCnt >= 100 && foodCnt <= 120){
+			if(foodCount >= 100 && foodCount <= 120){
 				bean3.setColor(ColorType.绿.getValue());
 				bean3.setStatusLabel(ColorType.绿.getTips());
 				greeCnt++;
-			}else if((foodCnt >= 80 && foodCnt < 100) || (foodCnt > 120 && foodCnt <= 140)){
+			}else if((foodCount >= 80 && foodCount < 100) || (foodCount > 120 && foodCount <= 140)){
 				bean3.setColor(ColorType.黄.getValue());
 				bean3.setStatusLabel(ColorType.黄.getTips());
 				yellowCnt++;
-			}else if(foodCnt < 100 || foodCnt > 140){
+			}else if(foodCount < 100 || foodCount > 140){
 				bean3.setColor(ColorType.红.getValue());
 				bean3.setStatusLabel(ColorType.红.getTips());
 				redCnt++;
 			}
 			bean3.setNormalRange("100~120");
 		}else if(spaceSize.intValue() >= 150){
-			if(foodCnt >= 120 && foodCnt <= 140){
+			if(foodCount >= 120 && foodCount <= 140){
 				bean3.setColor(ColorType.绿.getValue());
 				bean3.setStatusLabel(ColorType.绿.getTips());
 				greeCnt++;
-			}else if((foodCnt >= 100 && foodCnt < 120) || (foodCnt > 140 && foodCnt <= 160)){
+			}else if((foodCount >= 100 && foodCount < 120) || (foodCount > 140 && foodCount <= 160)){
 				bean3.setColor(ColorType.黄.getValue());
 				bean3.setStatusLabel(ColorType.黄.getTips());
 				yellowCnt++;
-			}else if(foodCnt < 100 || foodCnt > 160){
+			}else if(foodCount < 100 || foodCount > 160){
 				bean3.setColor(ColorType.红.getValue());
 				bean3.setStatusLabel(ColorType.红.getTips());
 				redCnt++;
 			}
 			bean3.setNormalRange("120~140");
 		}
-		bean3.setScope(String.valueOf(foodCnt));
+		bean3.setScope(String.valueOf(foodCount));
 		bean3.setIdx(EvalValidateType.菜品数量.getValue());
 		bean3.setLabelName(EvalValidateType.菜品数量.getLabel());
 		validateBeanList.add(bean3);

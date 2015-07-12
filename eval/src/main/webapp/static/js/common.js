@@ -130,6 +130,7 @@ function redirectEidt(shopId){
         	$('#shopPage_posCnt').val(shop.posCount);
         	$('#shopPage_perPay').val(shop.perPay);
         	$('#shopPage_spaceSize').val(shop.spaceSize);
+        	$('#shopPage_foodCount').val(shop.foodCount);
         	
         	$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
         }, 
@@ -177,6 +178,7 @@ $(document).on("pageinit","#shop_list_page", function(){
 	    	$('#shopPage_posCnt').val("");
 	    	$('#shopPage_perPay').val("");
 	    	$('#shopPage_spaceSize').val("");
+	    	$('#shopPage_foodCount').val("");
 	    	
 			$.mobile.changePage("#insert_edit_shop_page", {transition:"slide",reverse:false}, true, true);
 		}, 200);
@@ -192,6 +194,7 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		var posCnt = $('#shopPage_posCnt').val();
 		var perPay = $('#shopPage_perPay').val();
 		var spaceSize = $('#shopPage_spaceSize').val();
+		var foodCount = $('#shopPage_foodCount').val();
 		
 		var monthlySales = $('#shopPage_monthlySales').val();
 		var monthlyPurchase = $('#shopPage_monthlyPurchase').val();
@@ -228,6 +231,11 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		
 		if(!spaceSize || !isInteger(spaceSize)){
 			alert("请输入合法的店铺面积.");
+			return;
+		}
+		
+		if(!foodCount || !isInteger(foodCount)){
+			alert("请输入合法的菜品数量.");
 			return;
 		}
 		

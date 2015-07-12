@@ -43,6 +43,9 @@ public class ShopEntity implements Serializable {
 	/**前厅面积*/
 	private BigDecimal spaceSize;
 	
+	/**菜品数量*/
+	private Integer foodCount;
+	
 	/**记录创建时间*/
 	private Date createDate;
 	
@@ -258,6 +261,20 @@ public class ShopEntity implements Serializable {
 	 */
 	public void setEvaluateValue(BigDecimal evaluateValue) {
 		this.evaluateValue = evaluateValue;
+	}
+
+	/**
+	 * @return the foodCount
+	 */
+	public Integer getFoodCount() {
+		return foodCount;
+	}
+
+	/**
+	 * @param foodCount the foodCount to set
+	 */
+	public void setFoodCount(Integer foodCount) {
+		this.foodCount = foodCount;
 	}
 
 }

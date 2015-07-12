@@ -98,11 +98,12 @@ public class EvalController {
 		String weixinAppId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
 		
 		String openId = WeixinUtil.getOpenId(weixinAppId, weixinAppSecret, code);
+				
 		*/
 		
 		// TODO DUMMY
 		String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
-		
+		logger.debug(openId);
 		UserEntity user = evalService.getUserByOpenId(openId);
 		
 		if(user == null){

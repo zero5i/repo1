@@ -1,20 +1,18 @@
 package com.jmh.server.commom.util;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import java.util.UUID;
-
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 
 /** <p>
  * @author JiangMuhua @date 2015年6月28日<br>

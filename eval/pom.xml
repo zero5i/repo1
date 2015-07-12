@@ -32,6 +32,19 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
 		<!-- 添加Servlet -->  
 	    <dependency>
 		    <groupId>javax.servlet</groupId>

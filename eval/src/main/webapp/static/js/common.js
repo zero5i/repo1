@@ -153,6 +153,7 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		var monthlySalary = $('#shopPage_monthlySalary').val();
 		var monthlyRent = $('#shopPage_monthlyRent').val();
 		var monthlyEnergy = $('#shopPage_monthlyEnergy').val();
+		var monthlyGroupBuy = $('#shopPage_monthlyGroupBuy').val();
 		var monthlyOtherPay = $('#shopPage_monthlyOtherPay').val();
 				
 		if(!shopName){
@@ -208,6 +209,15 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		if(!monthlyEnergy || !isInteger(monthlyEnergy)){
 			alert("请输入合法的每月能耗.");
 			return;
+		}
+		
+		if(!monthlyGroupBuy){
+			monthlyGroupBuy = 0;
+		}else{
+			if(!isInteger(monthlyGroupBuy)){
+				alert("请输入合法的团购收入.");
+				return;
+			}
 		}
 		
 		if(!monthlyOtherPay){

@@ -251,6 +251,7 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 		evalEntity.setMonthlyRent(evaluate.getMonthlyRent());
 		evalEntity.setMonthlySalary(evaluate.getMonthlySalary());
 		evalEntity.setMonthlySales(evaluate.getMonthlySales());
+		evalEntity.setMonthlyGroupBuy(evaluate.getMonthlyGroupBuy());
 
 		evalEntity.setEvaluateValue(evaluateValue);
 		

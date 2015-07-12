@@ -223,6 +223,12 @@
 								<s:textfield type="tel" name="evaluateEntity.monthlyEnergy" id="shopPage_monthlyEnergy" data-role="none" maxlength="8"/>
 								<div>元</div>  
 							</div>
+							<div class="one_3_1">
+								<div>10</div>
+								<div>团购收入:</div>
+								<s:textfield type="tel" name="evaluateEntity.monthlyGroupBuy" id="shopPage_monthlyGroupBuy" data-role="none" maxlength="8"/>
+								<div>元</div>  
+							</div>
 							<div class="one_3_1" style="margin-bottom:0">
 								<div>10</div>
 								<div>其它开销:</div>

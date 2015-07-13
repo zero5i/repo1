@@ -304,7 +304,7 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		        	
 		        	if(!data || !data.evalPageBean){
 		        		alert("评测失败，请重新打开微信后再试.");
-			        	$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
+			        	//$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
 			        	return;
 		        	}
 		        	
@@ -350,7 +350,7 @@ $(document).on("pageinit","#insert_edit_shop_page",function(){ // 当进入页�
 		        }, 
 		        error : function(data, status){
 		        	alert("评测失败，请稍候再试.");
-		        	$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
+		        	//$.mobile.changePage('#insert_edit_shop_page',"pop",false,false);
 		        } 
 		    });
 		}, 3000);
@@ -411,7 +411,7 @@ function dispResultDetail(idx, labelName, scope, normalRange, statusLabel){
         	$.mobile.changePage("#eval_result_analasys", {transition:"slide",reverse:false}, true, true);
         }, 
         error : function(data,status){
-        	
+        	alert("显示评测结果详细失败，请重新打开微信后再试.");
         } 
     });
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jmh.server.bean.EvalPageBean;
 import com.jmh.server.bean.WeixinJsSDKBean;
+import com.jmh.server.commom.util.WeixinUtil;
 import com.jmh.server.entity.CityEntity;
 import com.jmh.server.entity.EvaluateEntity;
 import com.jmh.server.entity.ShopEntity;
@@ -85,25 +86,19 @@ public class EvalController {
 	
 	public String index() {
 		
-		//String code = request.getParameter("code");
-		/*
+		// 从微信服务器接收Code
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String code = request.getParameter("code");
+		
 		if(code == null){
 			return null;
 		}
 		
-		// 微信App.id
-		String weixinAppSecret = CustomizedPropertyConfigurer.getContextProperty("weixin.app.secret");
-		
-		// 微信App.id
-		String weixinAppId = CustomizedPropertyConfigurer.getContextProperty("weixin.app.id");
-		
-		String openId = WeixinUtil.getOpenId(weixinAppId, weixinAppSecret, code);
-				
-		*/
+		String openId = WeixinUtil.getRemoteOpenId(code);
 		
 		// TODO DUMMY
-		String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
-		logger.debug(openId);
+		// String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
+		logger.debug("openId : " + openId);
 		UserEntity user = evalService.getUserByOpenId(openId);
 		
 		if(user == null){

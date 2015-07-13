@@ -57,12 +57,14 @@
 		insert into	t_user
 		(
 			open_id,
+			login_token,
 			init_flag,
 			create_date,
 			update_date
 		) 
 		values(
 			#{openId},
+			#{loginToken},
 			0, 
 			now(), 
 			now()

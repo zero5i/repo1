@@ -85,14 +85,18 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 	@Override
 	public UserEntity getUserByOpenId(String openId) {
 		
+		// 取得随机字符串作为登陆Token
+		String loginToken = WeixinUtil.getRandomNoncestr();
+	
 		UserEntity userEntity = userDao.selectUserByOpenId(openId);
 		
 		if(userEntity == null){
-			return null;
+			UserEntity user = new UserEntity();
+			user.setOpenId(openId);
+			user.setLoginToken(loginToken);
+			int ret = userDao.insertUser(user);
+			return ret == 0 ? null : userEntity;
 		}
-		
-		// 取得随机字符串作为登陆Token
-		String loginToken = WeixinUtil.getRandomNoncestr();
 		
 		userEntity.setLoginToken(loginToken);
 		

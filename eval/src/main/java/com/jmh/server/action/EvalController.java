@@ -91,7 +91,7 @@ public class EvalController {
 		String code = request.getParameter("code");
 		
 		if(code == null){
-			return null;
+			return INPUT;
 		}
 		
 		String openId = WeixinUtil.getRemoteOpenId(code);

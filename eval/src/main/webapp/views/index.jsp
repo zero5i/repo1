@@ -340,11 +340,11 @@
 			</div>
 		</div>
 		<div class="footer">
-			<div style="float:left;width:80px;margin-left:10px;">
-				<input type="button" value="返回" id="btn_back_result_list"/>
+			<div style="float:left;width:130px;margin-left:10px;">
+				<input type="image" src="${ctx}/static/images/eleven/fanhui_1.png" id="btn_back_result_list"/>
 			</div>
-			<div style="float:right;width:80px;margin-right:10px;">
-				<input type="button" value="分享" id="btn_go_share"/>
+			<div style="float:right;width:130px;margin-right:10px;">
+				<input type="image" src="${ctx}/static/images/eleven/fenxiang1_1.png" id="btn_go_share"/>
 			</div>
 		</div>
 	</div>

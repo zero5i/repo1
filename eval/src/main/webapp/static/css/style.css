@@ -512,7 +512,11 @@ input::-webkit-inner-spin-button {
 	background-image: url("../images/eleven/bg.jpg");
 }
 
-
+#eval_detail_chart #btn_back_result_list,
+#eval_detail_chart #btn_go_share{
+	width:130px;
+	margin-bottom: 5px;
+}
 
 #eval_shop_result_list div:nth-child(1){
 	margin:10px auto;

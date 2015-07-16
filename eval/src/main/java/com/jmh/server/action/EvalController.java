@@ -103,7 +103,7 @@ public class EvalController {
 		// TODO DUMMY
 		// String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
 		logger.debug("openId : " + openId);
-		UserEntity user = evalService.getUserByOpenId(openId);
+		UserEntity user = evalService.procUserByOpenId(openId);
 		
 		if(user == null){
 			return INPUT; 

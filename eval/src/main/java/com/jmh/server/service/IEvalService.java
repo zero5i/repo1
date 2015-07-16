@@ -26,7 +26,7 @@ public interface IEvalService {
 	 * @return <p>
 	 * UserEntity
 	 */
-	public UserEntity getUserByOpenId(String openId);
+	public UserEntity procUserByOpenId(String openId);
 	
 	/**
 	 * <p>取得店铺列表</p>

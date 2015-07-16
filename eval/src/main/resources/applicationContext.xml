@@ -76,6 +76,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				rollback-for="java.lang.RuntimeException" />
 			<tx:method name="update*" propagation="REQUIRED" read-only="false"
 				rollback-for="java.lang.Exception" />
+			<tx:method name="proc*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
 
 			<tx:method name="find*" propagation="SUPPORTS" />
 			<tx:method name="get*" propagation="SUPPORTS" />
@@ -85,7 +87,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 	<aop:config>
 		<aop:pointcut id="pc"
-			expression="execution(public * com.jmh.sample.service.*.*(..))" /> <!--把事务控制在Service层 -->
+			expression="execution(public * com.jmh.server.service.*.*(..))" /> <!--把事务控制在Service层 -->
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
 

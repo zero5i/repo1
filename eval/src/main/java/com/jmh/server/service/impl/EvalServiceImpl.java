@@ -83,7 +83,7 @@ public class EvalServiceImpl extends AbsBaseService implements IEvalService{
 	}
 
 	@Override
-	public UserEntity getUserByOpenId(String openId) {
+	public UserEntity procUserByOpenId(String openId) {
 		
 		if(StringUtils.isEmpty(openId)){
 			return null;

@@ -42,6 +42,7 @@
 				<param name="actionName">f_index</param> 
 				<param name="loginToken">${loginToken}</param>
 			</result>
+			<result name="input">views/error/404.jsp</result>
 		</action>
 		
 		<action name="f_index" class="com.jmh.server.action.EvalController" method="f_index">

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,11 +91,14 @@ public class EvalController {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String code = request.getParameter("code");
 		
-		if(code == null){
+		if(StringUtils.isEmpty(code)){
 			return INPUT;
 		}
 		
 		String openId = WeixinUtil.getRemoteOpenId(code);
+		if(StringUtils.isEmpty(openId)){
+			return INPUT; 
+		}
 		
 		// TODO DUMMY
 		// String openId = "oZf8yty0yxkzviCVi0sVutI95iB8";
